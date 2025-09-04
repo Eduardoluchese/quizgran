@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Descubra seu Charuto Perfeito</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="quiz-container">
+            <div class="intro-screen">
+                <div class="header">
+                    <img
+                        src="https://i.ibb.co/YBsJBVLQ/Inserir-um-ti-tulo-2.png"
+                        alt="GRANTEST Logo"
+                        class="logo"
+                    />
+                    <p class="brand-name" style="display: none">GRANTEST</p>
+                </div>
+                <h1>Descubra seu Charuto Perfeito em 2 Minutos</h1>
+                <div class="intro-image-container">
+                    <img
+                        src="https://i.ibb.co/WWXnQk2L/pngwing-com-2.png"
+                        alt="Charuto Perfeito"
+                        class="intro-image"
+                    />
+                </div>
+                <p class="sub-headline">
+                    🌟 Encontre o charuto ideal para seu paladar e ocasião
+                </p>
+                <p class="call-to-action-text">Clique Para Começar👇👇</p>
+                <button class="start-button">FAZER TESTE</button>
+            </div>
+
+            <div class="name-screen" id="nameScreen" style="display: none">
+                <div class="header">
+                    <img
+                        src="https://i.ibb.co/YBsJBVLQ/Inserir-um-ti-tulo-2.png"
+                        alt="GRANTEST Logo"
+                        class="logo"
+                    />
+                    <p class="brand-name" style="display: none">GRANTEST</p>
+                </div>
+                <h1>Olá! Qual seu nome?</h1>
+                <p class="sub-headline">
+                    Para uma experiência ainda mais personalizada, gostaríamos
+                    de saber seu nome.
+                </p>
+                <input
+                    type="text"
+                    id="userNameInput"
+                    placeholder="Seu nome aqui"
+                />
+                <button class="cta-button" id="continueWithName">
+                    Continuar com o nome
+                </button>
+                <button
+                    class="cta-button secondary-cta"
+                    id="continueSimplified"
+                >
+                    Continuar com experiência simplificada
+                </button>
+            </div>
+
+            <div class="quiz-screen" style="display: none">
+                <div class="header-container">
+                    <div class="header-top">
+                        <img
+                            src="https://i.ibb.co/YBsJBVLQ/Inserir-um-ti-tulo-2.png"
+                            alt="GRANTEST Logo"
+                            class="logo"
+                        />
+                        <p class="brand-name" style="display: none">GRANTEST</p>
+                    </div>
+                    <div class="quiz-progress-section">
+                        <span class="points-display">0 PONTOS</span>
+                        <div
+                            class="progress-bar-container quiz-progress-bar-container"
+                        >
+                            <div class="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <h2 id="question-text"></h2>
+                <div class="question-image-container">
+                    <img
+                        id="question-image"
+                        src="https://assets.website-files.com/62c8e30903328e1245787679/62d98d8d3844f2e519c5c179_charutos-cubanos-online-p-800.jpeg"
+                        alt="Imagem da Pergunta"
+                        class="question-image"
+                    />
+                </div>
+                <div class="options-container">
+                    <!-- Options will be loaded here by JavaScript -->
+                </div>
+                <button class="next-button" style="display: none">
+                    Próxima Pergunta
+                </button>
+            </div>
+
+            <div class="wheel-screen" style="display: none">
+                <div class="header">
+                    <img
+                        src="https://i.ibb.co/YBsJBVLQ/Inserir-um-ti-tulo-2.png"
+                        alt="GRANTEST Logo"
+                        class="logo"
+                    />
+                    <p class="brand-name" style="display: none">GRANTEST</p>
+                </div>
+                <h2>🎯 {userName}, você ganhou uma chance especial!</h2>
+                <p class="sub-headline">
+                    Gire a roleta e garanta seu desconto exclusivo
+                </p>
+
+                <div class="wheel-container">
+                    <canvas id="wheel" width="300" height="300"></canvas>
+                    <div class="wheel-pointer"></div>
+                </div>
+
+                <button id="spin-wheel" class="cta-button">
+                    🎯 GIRAR ROLETA
+                </button>
+                <div id="wheel-result"></div>
+            </div>
+
+            <div class="result-screen" style="display: none">
+                <div class="header">
+                    <img
+                        src="https://i.ibb.co/YBsJBVLQ/Inserir-um-ti-tulo-2.png"
+                        alt="GRANTEST Logo"
+                        class="logo"
+                    />
+                    <p class="brand-name" style="display: none">GRANTEST</p>
+                </div>
+                <h2 id="result-title"></h2>
+                <div class="recommendations-container">
+                    <!-- Recommendations will be loaded here by JavaScript -->
+                </div>
+                <div class="bonus-section">
+                    <h3>🎁 Sua compra hoje inclui:</h3>
+                    <ul>
+                        <li>📚 Guia digital (R$ 97)</li>
+                        <li>✂️ Cortador premium (R$ 150)</li>
+                        <li>🌟 Clube VIP (R$ 79)</li>
+                    </ul>
+                </div>
+                <div class="guarantees-section">
+                    <h3>GARANTIAS:</h3>
+                    <ul>
+                        <li>✅ Satisfação Garantida</li>
+                        <li>🚚 Frete Grátis</li>
+                        <li>🔒 Pagamento Seguro</li>
+                        <li>💯 7 dias de garantia</li>
+                    </ul>
+                </div>
+                <div class="timer-container">
+                    ⏰ <span id="timer">15:00</span> minutos
+                </div>
+                <button class="cta-button">
+                    🎯 GARANTIR MEU CHARUTO PERFEITO
+                </button>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+        <div id="confetti-container"></div>
+    </body>
+</html>
