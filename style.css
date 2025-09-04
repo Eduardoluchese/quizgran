@@ -307,35 +307,40 @@ p.sub-headline {
 }
 
 /* Buttons */
-button {
+button,
+.option,
+.cta-button,
+.next-button.break-mode {
     background: linear-gradient(to right, #795548, #5d4037);
     color: white;
-    border: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-style: solid;
+    border-color: #5d4037;
+    position: relative;
+    border-bottom-width: 8px;
     padding: 15px 30px;
     border-radius: 8px;
     font-size: 1em;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease; /* Garantir que a transição esteja aqui */
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+    transform: translateY(-2px);
+    outline: none; /* Remover outline no foco */
+}
+
+
+button {
     margin-bottom: 30px;
     display: block;
 }
 
 /* Next button style for break screens - matches normal button dimensions */
 .next-button.break-mode {
-    background: linear-gradient(to right, #795548, #5d4037);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    font-size: 1em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    width: 100%;
+    /* background, color, border, padding, border-radius, font-size, font-weight, cursor, transition, width já definidos no seletor unificado */
     margin-bottom: 30px;
     text-align: center;
 }
@@ -359,9 +364,12 @@ button {
     }
 }
 
-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+button:hover,
+.next-button.break-mode:hover {
+    transform: translateY(-2px);
+    border-bottom-width: 8px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+    background: linear-gradient(to right, #5d4037, #4e342e); /* Tom de marrom mais escuro no hover */
 }
 
 /* Quiz Screen */
@@ -379,20 +387,10 @@ button:hover {
 }
 
 .option {
-    background: linear-gradient(to right, #795548, #5d4037);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1.1em;
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* background, color, border, padding, border-radius, font-size, font-weight, cursor, transition, width já definidos no seletor unificado */
     text-align: left;
     display: flex;
     align-items: center;
-    width: 100%;
     margin-bottom: 15px;
 }
 
