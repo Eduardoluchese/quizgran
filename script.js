@@ -193,8 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "break",
       content:
         "🎯 Como um bom vinho, cada charuto conta uma história única através de seus sabores",
-      image:
-        "https://assets.website-files.com/62c8e30903328e1245787679/62d98d8d3844f2e519c5c179_charutos-cubanos-online-p-800.jpeg",
+      image: "https://optimizer.dooca.store/479/files/screenshot-20220722-135957-chrome.jpg",
     },
     {
       type: "question",
