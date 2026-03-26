@@ -141,19 +141,6 @@
     @keyframes transZoomIn { from{opacity:0;transform:scale(0.5)} to{opacity:1;transform:scale(1)} }
     @keyframes transFlip { from{opacity:0;transform:rotateY(90deg)} to{opacity:1;transform:rotateY(0)} }
   
-    .mobile-image {
-      width: 100%;
-      display: block;
-      margin-bottom: 10px;
-    }
-    .mobile-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 1rem;
-      object-fit: contain;
-    }
-    
     .mobile-video .container {
       container-type: inline-size;
       max-width: 600px;
@@ -167,6 +154,7 @@
       background-color: #000;
       overflow: hidden;
       border-radius: 1rem;
+      cursor: pointer;
     }
     .mobile-video .video-iframe,
     .mobile-video .video-container iframe {
@@ -253,7 +241,6 @@
     }
     
     .mobile-button,
-    .mobile-image,
     .mobile-video .container {
       width: 100%;
       margin: 0 auto;
@@ -263,47 +250,42 @@
     </head>
     <body>
        <div id="quiz-container">
-            <section id="section-0" class="quiz-section active" data-transition="fade" data-transition-duration="0.5" style="background-color: #ffffff">
+            <section id="section-0" class="quiz-section active" data-transition="none" data-transition-duration="0.5" style="background-color: #ffffff">
                 <div class="content" style="color: #000000;">
-                    <button class="mobile-button" id="button-1774528332277" data-bg="#9333A6" data-gradient="#a855f7" data-hover-color="#c084fc" data-border="#9333A6" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(147, 51, 166), rgb(168, 85, 247)); border-color: rgb(147, 51, 166); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px);"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255);">Texto do Botão</span></button>
+                    <button class="mobile-button" id="button-1774529359139" data-bg="#9333a6" data-gradient="#a855f7" data-hover-color="#c084fc" data-border="#9333a6" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(147, 51, 166), rgb(168, 85, 247)); border-color: rgb(147, 51, 166); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); position: relative; opacity: 1;" data-delay="0" data-sound="click" data-sound-url="" data-sound-volume="50" data-animation="none"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Texto do Botão</span></button>
                 </div>
             </section>
-            <section id="section-1" class="quiz-section " data-transition="slide-left" data-transition-duration="0.5" style="background-color: #ffffff">
+            <section id="section-1" class="quiz-section " data-transition="none" data-transition-duration="0.5" style="background-color: #ffffff">
                 <div class="content" style="color: #000000;">
-                    <button class="mobile-button" id="button-1774528348978" data-bg="#16a34a" data-gradient="#22c55e" data-hover-color="#86efac" data-border="#16a34a" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(22, 163, 74), rgb(34, 197, 94)); border-color: rgb(22, 163, 74); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); position: relative; opacity: 1;" data-delay="0" data-sound="none" data-sound-url="" data-sound-volume="50" data-animation="none"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">ddTexto do Botão</span></button>
+                    <button class="mobile-button" id="button-1774529420656" data-bg="#9333a6" data-gradient="#a855f7" data-hover-color="#c084fc" data-border="#9333a6" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(147, 51, 166), rgb(168, 85, 247)); border-color: rgb(147, 51, 166); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); position: relative; opacity: 1;" data-delay="0" data-sound="click" data-sound-url="" data-sound-volume="50" data-animation="none"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Texto do Botão</span></button>
                 </div>
             </section>
-            <section id="section-2" class="quiz-section " data-transition="slide-left" data-transition-duration="0.5" style="background-color: #ffffff">
+            <section id="section-2" class="quiz-section " data-transition="none" data-transition-duration="0.5" style="background-color: #ffffff">
                 <div class="content" style="color: #000000;">
-                    <button class="mobile-button" id="button-1774528363438" data-bg="#16a34a" data-gradient="#22c55e" data-hover-color="#86efac" data-border="#16a34a" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(22, 163, 74), rgb(34, 197, 94)); border-color: rgb(22, 163, 74); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px);"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255);">Texto do Botão</span></button><div id="image-1774528364682" class="mobile-image"><img src="https://placehold.co/600x400" alt="Imagem"></div>
+                    <button class="mobile-button" id="button-1774529434799" data-bg="#9333a6" data-gradient="#a855f7" data-hover-color="#c084fc" data-border="#9333a6" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(147, 51, 166), rgb(168, 85, 247)); border-color: rgb(147, 51, 166); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); position: relative; opacity: 1;" data-delay="0" data-sound="celebration" data-sound-url="" data-sound-volume="50" data-animation="none"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Texto do Botão</span></button>
                 </div>
             </section>
-            <section id="section-3" class="quiz-section " data-transition="slide-up" data-transition-duration="0.5" style="background-color: #f1c9fe">
+            <section id="section-3" class="quiz-section " data-transition="none" data-transition-duration="0.5" style="background-color: #ffffff">
                 <div class="content" style="color: #000000;">
-                    <button class="mobile-button" id="button-1774528390690" data-bg="#1e293b" data-gradient="#334155" data-hover-color="#64748b" data-border="#1e293b" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(30, 41, 59), rgb(51, 65, 85)); border-color: rgb(30, 41, 59); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); position: relative;"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255);">Texto do Botão</span></button>
-                </div>
-            </section>
-            <section id="section-4" class="quiz-section " data-transition="zoom-in" data-transition-duration="0.5" style="background-color: #232323">
-                <div class="content" style="color: #000000;">
-                    <div id="video-1774528414088" class="mobile-video" data-overlay-color="#dc2626" style="position: relative;">
+                    <div id="video-1774529444143" class="mobile-video" data-overlay-color="#5d3f92" style="position: relative;">
       <div class="container">
-        <div class="video-container" style="background: url(&quot;https://img.youtube.com/vi/VPYEso5cPgY/hqdefault.jpg&quot;) center center / cover no-repeat rgb(0, 0, 0); padding-bottom: 124.8%;">
-          <iframe id="youtube-video-1774528414088" class="video-iframe" src="https://www.youtube-nocookie.com/embed/VPYEso5cPgY?controls=0&modestbranding=1&showinfo=0&rel=0&fs=0&iv_load_policy=3&disablekb=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
-          <div id="blur-bg-1774528414088" class="blur-background"></div>
-          <div id="start-overlay-1774528414088" class="overlay" style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.933), rgba(239, 68, 68, 0.867)); color: rgb(255, 255, 255);">
+        <div class="video-container" style="background: url(&quot;https://img.youtube.com/vi/VPYEso5cPgY/hqdefault.jpg&quot;) center center / cover no-repeat rgb(0, 0, 0); padding-bottom: 177.77%;">
+          <iframe id="youtube-video-1774529444143" class="video-iframe" src="https://www.youtube-nocookie.com/embed/VPYEso5cPgY?controls=0&modestbranding=1&showinfo=0&rel=0&fs=0&iv_load_policy=3&disablekb=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+          <div id="blur-bg-1774529444143" class="blur-background"></div>
+          <div id="start-overlay-1774529444143" class="overlay" style="background: rgb(93, 63, 146); color: rgb(255, 255, 255);">
             <h1 class="overlay-title">Seu vídeo já começou</h1>
-         <svg class="play-icon" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);">
-            <circle cx="12" cy="12" r="10" stroke="#ffffff" stroke-width="1" fill="none" style=""></circle>
-            <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#ffffff" style=""></path>
+         <svg class="play-icon" viewBox="0 0 24 24" style="color: rgb(255, 0, 0);">
+            <circle cx="12" cy="12" r="10" stroke="#ff0000" stroke-width="1" fill="none" style=""></circle>
+            <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#ff0000" style=""></path>
         </svg>
 
             <p class="overlay-text">Clique para assistir</p>
           </div>
-          <div id="pause-overlay-1774528414088" class="overlay hidden" style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.933), rgba(239, 68, 68, 0.867)); color: rgb(255, 255, 255);">
+          <div id="pause-overlay-1774529444143" class="overlay hidden" style="background: rgb(93, 63, 146); color: rgb(255, 255, 255);">
             <h1 class="overlay-title">Vídeo pausado</h1>
-            <svg class="play-icon" viewBox="0 0 24 24" fill="white" style="color: rgb(255, 255, 255);">
-              <circle cx="12" cy="12" r="10" stroke="#ffffff" stroke-width="1" fill="none" style=""></circle>
-              <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#ffffff" style=""></path>
+            <svg class="play-icon" viewBox="0 0 24 24" fill="white" style="color: rgb(255, 0, 0);">
+              <circle cx="12" cy="12" r="10" stroke="#ff0000" stroke-width="1" fill="none" style=""></circle>
+              <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#ff0000" style=""></path>
             </svg>
             <p class="overlay-text">Continuar assistindo</p>
           </div>
@@ -315,7 +297,7 @@
             </section>
  </div>
 <script>
-  const connectionsData = [{"startIndex":3,"endIndex":4,"elementId":"button-1774528390690"},{"startIndex":2,"endIndex":3,"elementId":"button-1774528363438"},{"startIndex":1,"endIndex":2,"elementId":"button-1774528348978"},{"startIndex":0,"endIndex":1,"elementId":"button-1774528332277"}];
+  const connectionsData = [{"startIndex":0,"endIndex":1,"elementId":"button-1774529359139"},{"startIndex":1,"endIndex":2,"elementId":"button-1774529420656"},{"startIndex":2,"endIndex":3,"elementId":"button-1774529434799"}];
 
   const ANALYTICS_CONFIG = {
     webhookUrl: "https://script.google.com/macros/s/AKfycbzl-OEF6f7yhlSJaLrJYLaa58vXPVLNPe_i3omnAMLzPjLWrYUDJISccDIcR6mplsOVIg/exec",
@@ -591,6 +573,7 @@
     var pauseOverlay = videoDiv.querySelector('[id^="pause-overlay"]');
     var blurBg = videoDiv.querySelector('[id^="blur-bg"]');
     var iframe = videoDiv.querySelector("iframe");
+    var container = videoDiv.querySelector(".video-container");
     if (!iframe || videoDiv._initialized) return;
     videoDiv._initialized = true;
 
@@ -598,19 +581,39 @@
     if (startOverlay) { startOverlay.style.display = "flex"; startOverlay.style.zIndex = "200"; }
     if (blurBg) { blurBg.style.display = "block"; blurBg.style.zIndex = "199"; }
     if (pauseOverlay) { pauseOverlay.style.display = "none"; }
+    // iframe sem interação direta - controle via overlays
+    iframe.style.pointerEvents = "none";
 
-    // Ao clicar no overlay: esconder tudo instantaneamente
     var isVideoPlaying = false;
-    function playVideo() {
+    var hasStarted = false;
+
+    function postCmd(cmd) {
+      try { iframe.contentWindow.postMessage(JSON.stringify({event:"command",func:cmd,args:""}), "*"); } catch(e) {}
+    }
+
+    function play() {
       isVideoPlaying = true;
       if (startOverlay) startOverlay.style.display = "none";
       if (pauseOverlay) pauseOverlay.style.display = "none";
-      if (blurBg) blurBg.style.display = "none";
-      // Adicionar autoplay=1 na URL do iframe
-      var src = iframe.src;
-      if (src && !src.includes("autoplay=1")) {
-        iframe.src = src + "&autoplay=1";
+
+      if (!hasStarted) {
+        // Primeiro play: manter blur enquanto iframe recarrega com autoplay
+        hasStarted = true;
+        var src = iframe.src;
+        if (src && !src.includes("autoplay=1")) {
+          iframe.onload = function() {
+            // Iframe carregou com autoplay - agora esconde blur
+            if (blurBg) blurBg.style.display = "none";
+            iframe.onload = null;
+          };
+          iframe.src = src + "&autoplay=1&enablejsapi=1";
+        }
+      } else {
+        // Retomar: esconde blur e envia comando play
+        if (blurBg) blurBg.style.display = "none";
+        postCmd("playVideo");
       }
+
       // Marcar tempo de início para botões vinculados
       videoDiv._playStartTime = Date.now();
       videoTimes.set(uniqueId, 0);
@@ -623,8 +626,26 @@
         }, 500);
       }
     }
-    if (startOverlay) startOverlay.onclick = playVideo;
-    if (pauseOverlay) pauseOverlay.onclick = playVideo;
+
+    function pause() {
+      isVideoPlaying = false;
+      if (pauseOverlay) pauseOverlay.style.display = "flex";
+      if (blurBg) blurBg.style.display = "block";
+      postCmd("pauseVideo");
+    }
+
+    // Click no start overlay: play
+    if (startOverlay) startOverlay.onclick = function(e) { e.stopPropagation(); play(); };
+    // Click no pause overlay: retomar
+    if (pauseOverlay) pauseOverlay.onclick = function(e) { e.stopPropagation(); play(); };
+    // Click no container (área do vídeo): pausar
+    if (container) {
+      container.addEventListener("click", function(e) {
+        if (e.target.closest(".overlay")) return;
+        e.stopPropagation();
+        if (isVideoPlaying) pause();
+      });
+    }
   }
 
   function initVideosInSection(section) {
