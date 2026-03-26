@@ -1,0 +1,673 @@
+
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Quiz Exportado</title>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+      
+      <style>
+      body {
+           font-family: 'Poppins', sans-serif;
+               line-height: 1.3;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                min-height: 100vh;
+            }
+            #quiz-container {
+                width: 100%;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .quiz-section {
+                display: none;
+                width: 100%;
+                min-height: 100vh;
+                padding: 20px 0;
+                box-sizing: border-box;
+            }
+            .quiz-section.active {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .content {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 0 20px;
+                box-sizing: border-box;
+            }
+      h1, h2, h3, p {
+        font-weight: inherit;
+        font-style: inherit;
+        font-weight: normal !important;
+      }
+      h1 b, h2 b, h3 b {
+        font-weight: bold !important;
+      }
+  
+    .mobile-button {
+      position: relative;
+      width: 100%;
+      min-height: 65px;
+      display: flex;
+      align-items: center;
+      border-radius: 0.75rem;
+      border: 1px solid;
+      font-size: 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .mobile-button:hover {
+      background: linear-gradient(45deg, var(--hover-color), var(--hover-color)) !important;
+    }
+    .mobile-button[data-video-trigger] {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .mobile-button[data-video-trigger].video-btn-visible {
+      display: flex !important;
+      opacity: 1;
+    }
+    .mobile-button .emoji {
+      margin-left: -10px;
+      font-size: 40px;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+    .mobile-button .text {
+      flex: 1;
+      text-align: left;
+    }
+    .mobile-button a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #89b4fa;
+      color: #1e1e2e;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #b4befe;
+    }
+    .btn-anim-pulse { animation: btnPulse 1.5s ease-in-out infinite; }
+    .btn-anim-bounce { animation: btnBounce 1s ease infinite; }
+    .btn-anim-shake { animation: btnShake 2s ease-in-out infinite; }
+    .btn-anim-glow { animation: btnGlow 2s ease-in-out infinite; }
+    .btn-anim-wiggle { animation: btnWiggle 1.5s ease-in-out infinite; }
+    .btn-anim-heartbeat { animation: btnHeartbeat 1.5s ease-in-out infinite; }
+    .btn-anim-float { animation: btnFloat 3s ease-in-out infinite; }
+    @keyframes btnPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+    @keyframes btnBounce { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-8px)} 50%{transform:translateY(0)} 70%{transform:translateY(-4px)} }
+    @keyframes btnShake { 0%,100%{transform:translateX(0)} 10%,30%,50%{transform:translateX(-3px)} 20%,40%{transform:translateX(3px)} 60%{transform:translateX(0)} }
+    @keyframes btnGlow { 0%,100%{box-shadow:0 0 5px rgba(255,255,255,0.2)} 50%{box-shadow:0 0 20px rgba(255,255,255,0.6),0 0 40px rgba(147,51,234,0.3)} }
+    @keyframes btnWiggle { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-2deg)} 75%{transform:rotate(2deg)} }
+    @keyframes btnHeartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.08)} 28%{transform:scale(1)} 42%{transform:scale(1.08)} 70%{transform:scale(1)} }
+    @keyframes btnFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    
+    .quiz-section { opacity: 0; }
+    .quiz-section.active { opacity: 1; }
+    .trans-fade { animation: transFade var(--trans-dur, 0.5s) ease forwards; }
+    .trans-slide-left { animation: transSlideLeft var(--trans-dur, 0.5s) ease forwards; }
+    .trans-slide-right { animation: transSlideRight var(--trans-dur, 0.5s) ease forwards; }
+    .trans-slide-up { animation: transSlideUp var(--trans-dur, 0.5s) ease forwards; }
+    .trans-slide-down { animation: transSlideDown var(--trans-dur, 0.5s) ease forwards; }
+    .trans-zoom-in { animation: transZoomIn var(--trans-dur, 0.5s) ease forwards; }
+    .trans-flip { animation: transFlip var(--trans-dur, 0.5s) ease forwards; perspective: 1000px; }
+    .trans-none { animation: none; opacity: 1; }
+    @keyframes transFade { from{opacity:0} to{opacity:1} }
+    @keyframes transSlideLeft { from{opacity:0;transform:translateX(100%)} to{opacity:1;transform:translateX(0)} }
+    @keyframes transSlideRight { from{opacity:0;transform:translateX(-100%)} to{opacity:1;transform:translateX(0)} }
+    @keyframes transSlideUp { from{opacity:0;transform:translateY(100%)} to{opacity:1;transform:translateY(0)} }
+    @keyframes transSlideDown { from{opacity:0;transform:translateY(-100%)} to{opacity:1;transform:translateY(0)} }
+    @keyframes transZoomIn { from{opacity:0;transform:scale(0.5)} to{opacity:1;transform:scale(1)} }
+    @keyframes transFlip { from{opacity:0;transform:rotateY(90deg)} to{opacity:1;transform:rotateY(0)} }
+  
+    .mobile-image {
+      width: 100%;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .mobile-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 1rem;
+      object-fit: contain;
+    }
+    
+    .mobile-video .container {
+      container-type: inline-size;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .mobile-video .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      background-color: #000;
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+    .mobile-video .video-iframe,
+    .mobile-video .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: 1;
+    }
+    .mobile-video .blur-background {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 199;
+      display: block;
+    }
+    .mobile-video .overlay {
+      color: #fff;
+      position: absolute;
+      padding: 2cqw;
+      width: 50%;
+      height: 40%;
+      background-color: #5d3f92;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2cqw;
+      text-align: center;
+      border-radius: 8px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    .mobile-video .overlay-title {
+      font-family: Arial, sans-serif;
+      font-size: 5cqw;
+      font-weight: bold !important;
+      margin: 0;
+      text-transform: uppercase;
+    }
+    .mobile-video .overlay-text {
+      font-family: Arial, sans-serif;
+      font-size: 5cqw;
+      margin: 0;
+    }
+    .mobile-video .play-icon {
+      position: relative;
+      height: 50%;
+    }
+    .mobile-video .top-overlay,
+    .mobile-video .bottom-overlay {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background-color: transparent;
+      z-index: 300;
+      pointer-events: auto;
+    }
+    .mobile-video .top-overlay {
+      top: 0;
+      height: 20%;
+    }
+    .mobile-video .bottom-overlay {
+      bottom: 0;
+      height: 20%;
+    }
+    .mobile-video .hidden {
+      display: none;
+    }
+    .mobile-video .play-icon path,
+    .mobile-video .play-icon circle {
+      transition: all 0.3s ease;
+      stroke-width: 1.5;
+    }
+    
+    .mobile-button,
+    .mobile-image,
+    .mobile-video .container {
+      width: 100%;
+      margin: 0 auto;
+      margin-bottom: 40px;
+    }
+    </style>
+    </head>
+    <body>
+       <div id="quiz-container">
+            <section id="section-0" class="quiz-section active" data-transition="fade" data-transition-duration="0.5" style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <button class="mobile-button" id="button-1774528332277" data-bg="#9333A6" data-gradient="#a855f7" data-hover-color="#c084fc" data-border="#9333A6" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(147, 51, 166), rgb(168, 85, 247)); border-color: rgb(147, 51, 166); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px);"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255);">Texto do Botão</span></button>
+                </div>
+            </section>
+            <section id="section-1" class="quiz-section " data-transition="slide-left" data-transition-duration="0.5" style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <button class="mobile-button" id="button-1774528348978" data-bg="#16a34a" data-gradient="#22c55e" data-hover-color="#86efac" data-border="#16a34a" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(22, 163, 74), rgb(34, 197, 94)); border-color: rgb(22, 163, 74); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); position: relative; opacity: 1;" data-delay="0" data-sound="none" data-sound-url="" data-sound-volume="50" data-animation="none"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">ddTexto do Botão</span></button>
+                </div>
+            </section>
+            <section id="section-2" class="quiz-section " data-transition="slide-left" data-transition-duration="0.5" style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <button class="mobile-button" id="button-1774528363438" data-bg="#16a34a" data-gradient="#22c55e" data-hover-color="#86efac" data-border="#16a34a" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(22, 163, 74), rgb(34, 197, 94)); border-color: rgb(22, 163, 74); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px);"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255);">Texto do Botão</span></button><div id="image-1774528364682" class="mobile-image"><img src="https://placehold.co/600x400" alt="Imagem"></div>
+                </div>
+            </section>
+            <section id="section-3" class="quiz-section " data-transition="slide-up" data-transition-duration="0.5" style="background-color: #f1c9fe">
+                <div class="content" style="color: #000000;">
+                    <button class="mobile-button" id="button-1774528390690" data-bg="#1e293b" data-gradient="#334155" data-hover-color="#64748b" data-border="#1e293b" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(30, 41, 59), rgb(51, 65, 85)); border-color: rgb(30, 41, 59); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); position: relative;"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255);">Texto do Botão</span></button>
+                </div>
+            </section>
+            <section id="section-4" class="quiz-section " data-transition="zoom-in" data-transition-duration="0.5" style="background-color: #232323">
+                <div class="content" style="color: #000000;">
+                    <div id="video-1774528414088" class="mobile-video" data-overlay-color="#dc2626" style="position: relative;">
+      <div class="container">
+        <div class="video-container" style="background: url(&quot;https://img.youtube.com/vi/VPYEso5cPgY/hqdefault.jpg&quot;) center center / cover no-repeat rgb(0, 0, 0); padding-bottom: 124.8%;">
+          <iframe id="youtube-video-1774528414088" class="video-iframe" src="https://www.youtube-nocookie.com/embed/VPYEso5cPgY?controls=0&modestbranding=1&showinfo=0&rel=0&fs=0&iv_load_policy=3&disablekb=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+          <div id="blur-bg-1774528414088" class="blur-background"></div>
+          <div id="start-overlay-1774528414088" class="overlay" style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.933), rgba(239, 68, 68, 0.867)); color: rgb(255, 255, 255);">
+            <h1 class="overlay-title">Seu vídeo já começou</h1>
+         <svg class="play-icon" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);">
+            <circle cx="12" cy="12" r="10" stroke="#ffffff" stroke-width="1" fill="none" style=""></circle>
+            <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#ffffff" style=""></path>
+        </svg>
+
+            <p class="overlay-text">Clique para assistir</p>
+          </div>
+          <div id="pause-overlay-1774528414088" class="overlay hidden" style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.933), rgba(239, 68, 68, 0.867)); color: rgb(255, 255, 255);">
+            <h1 class="overlay-title">Vídeo pausado</h1>
+            <svg class="play-icon" viewBox="0 0 24 24" fill="white" style="color: rgb(255, 255, 255);">
+              <circle cx="12" cy="12" r="10" stroke="#ffffff" stroke-width="1" fill="none" style=""></circle>
+              <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#ffffff" style=""></path>
+            </svg>
+            <p class="overlay-text">Continuar assistindo</p>
+          </div>
+          <div class="top-overlay"></div>
+          <div class="bottom-overlay"></div>
+        </div>
+      </div></div>
+                </div>
+            </section>
+ </div>
+<script>
+  const connectionsData = [{"startIndex":3,"endIndex":4,"elementId":"button-1774528390690"},{"startIndex":2,"endIndex":3,"elementId":"button-1774528363438"},{"startIndex":1,"endIndex":2,"elementId":"button-1774528348978"},{"startIndex":0,"endIndex":1,"elementId":"button-1774528332277"}];
+
+  const ANALYTICS_CONFIG = {
+    webhookUrl: "https://script.google.com/macros/s/AKfycbzl-OEF6f7yhlSJaLrJYLaa58vXPVLNPe_i3omnAMLzPjLWrYUDJISccDIcR6mplsOVIg/exec",
+    quizId: "quiz_" + Date.now(),
+    quizName: "Meu Quiz",
+    quizCategory: "Teste",
+  };
+
+  const quizAnalytics = {
+    quizName: ANALYTICS_CONFIG.quizName,
+    startTime: Date.now(),
+    endTime: null,
+    furthestSection: "section-0",
+    responses: {},
+    city: "",
+    state: "",
+    postalCode: "",
+    device: "",
+    nome: "",
+    email: "",
+    whatsapp: "",
+  };
+
+  async function sendAnalytics() {
+    try {
+      quizAnalytics.nome = userVariables.nome || "";
+      quizAnalytics.email = userVariables.email || "";
+      quizAnalytics.whatsapp = userVariables.whatsapp || "";
+      quizAnalytics.city = quizAnalytics.city || "Desconhecida";
+      const dataToSend = [quizAnalytics];
+      await fetch(ANALYTICS_CONFIG.webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ data: JSON.stringify(dataToSend) }),
+      });
+    } catch (error) {
+      console.error("Erro ao enviar analytics:", error);
+    }
+  }
+
+  function detectDeviceType() {
+    const ua = navigator.userAgent;
+    if (/android/i.test(ua)) return "Android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+    if (/Windows Phone/i.test(ua)) return "Windows Phone";
+    if (/Macintosh/i.test(ua)) return "Mac";
+    if (/Windows/i.test(ua)) return "Windows";
+    if (/Linux/i.test(ua)) return "Linux";
+    return "Other";
+  }
+  quizAnalytics.device = detectDeviceType();
+
+  let dataSent = false;
+  function handlePageHide() {
+    if (dataSent) return;
+    dataSent = true;
+    quizAnalytics.endTime = Date.now();
+    quizAnalytics.nome = userVariables.nome || "";
+    quizAnalytics.email = userVariables.email || "";
+    quizAnalytics.whatsapp = userVariables.whatsapp || "";
+    const dataToSend = [quizAnalytics];
+    const blob = new Blob(
+      [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+      { type: "application/x-www-form-urlencoded" }
+    );
+    navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob);
+  }
+  function handleVisibilityChange() {
+    if (document.visibilityState === 'hidden') handlePageHide();
+  }
+  window.addEventListener("pagehide", handlePageHide);
+  window.addEventListener("beforeunload", handlePageHide);
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+
+  document.addEventListener("click", function (e) {
+    const button = e.target.closest(".mobile-button");
+    if (button) {
+      if (button.disabled || button.style.pointerEvents === "none") return;
+      const link = button.getAttribute("data-link");
+      if (link) {
+        e.preventDefault();
+        if (!sessionStorage.getItem('quizState')) sessionStorage.setItem('quizState', 'active');
+        quizAnalytics.endTime = Date.now();
+        if (dataSent) { window.location.href = link; }
+        else { sendAnalyticsAndRedirect(link); }
+        return;
+      }
+      const buttonId = button.id;
+      const connection = connectionsData.find((conn) => conn.elementId === buttonId);
+      if (connection) {
+        quizAnalytics.responses["section_" + connection.startIndex] = button.querySelector(".text").textContent;
+        showSection("section-" + connection.endIndex);
+      }
+    }
+  });
+
+  function sendAnalyticsAndRedirect(url) {
+    if (dataSent) return;
+    dataSent = true;
+    quizAnalytics.nome = userVariables.nome || "";
+    quizAnalytics.email = userVariables.email || "";
+    quizAnalytics.whatsapp = userVariables.whatsapp || "";
+    quizAnalytics.city = quizAnalytics.city || "Desconhecida";
+    const dataToSend = [quizAnalytics];
+    const blob = new Blob(
+      [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+      { type: "application/x-www-form-urlencoded" }
+    );
+    const beaconSent = navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob);
+    if (beaconSent) { window.location.href = url; }
+    else {
+      fetch(ANALYTICS_CONFIG.webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ data: JSON.stringify(dataToSend) }),
+      }).then(() => { window.location.href = url; })
+        .catch(() => { window.location.href = url; });
+    }
+  }
+
+  let locationFetched = false;
+  async function fetchUserLocation() {
+    if (locationFetched) return;
+    locationFetched = true;
+    try {
+      const response = await fetch("https://ipapi.co/json/");
+      if (!response.ok) throw new Error("ipapi.co falhou");
+      const data = await response.json();
+      quizAnalytics.city = data.city || "Desconhecida";
+      quizAnalytics.state = data.region || "Desconhecido";
+      quizAnalytics.postalCode = data.postal || "Desconhecido";
+    } catch (error) {
+      quizAnalytics.city = "Desconhecida";
+      quizAnalytics.state = "Desconhecido";
+      quizAnalytics.postalCode = "Desconhecido";
+    }
+  }
+
+
+  function setupDelayedButtons(section) {
+    const buttons = section.querySelectorAll(".mobile-button[data-delay]");
+    buttons.forEach((button) => {
+      button.style.opacity = "0";
+      button.style.pointerEvents = "none";
+      const delay = (parseFloat(button.getAttribute("data-delay")) || 0) * 1000;
+      setTimeout(() => {
+        button.style.opacity = "1";
+        button.style.pointerEvents = "auto";
+      }, delay);
+    });
+  }
+
+  const videoTimes = new Map();
+  function pauseAllVideos() {
+    document.querySelectorAll(".mobile-video iframe").forEach(function(iframe) {
+      try { iframe.contentWindow.postMessage(JSON.stringify({event:"command",func:"pauseVideo",args:""}), "*"); } catch(e){}
+    });
+  }
+
+  let userVariables = {};
+  function interpolateVariables() {}
+
+  function showSection(sectionId) {
+    pauseAllVideos();
+    const sections = document.querySelectorAll(".quiz-section");
+    sections.forEach((section) => {
+      section.classList.remove("active");
+      section.className = section.className.replace(/\btrans-\S+/g, "").trim();
+      section.querySelectorAll(".mobile-button").forEach((button) => {
+        button.style.opacity = "0";
+        button.style.transition = "none";
+        button.style.pointerEvents = "none";
+      });
+    });
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      targetSection.classList.add("active");
+      var transType = targetSection.getAttribute("data-transition") || "none";
+      var transDur = targetSection.getAttribute("data-transition-duration") || "0.5";
+      if (transType && transType !== "none") {
+        targetSection.style.setProperty("--trans-dur", transDur + "s");
+        targetSection.classList.add("trans-" + transType);
+      }
+      window.scrollTo({ top: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      setupDelayedButtons(targetSection);
+      targetSection.querySelectorAll(".mobile-button:not([data-delay])").forEach((button) => {
+        button.style.opacity = "1";
+        button.style.transition = "opacity 0.3s ease";
+        button.style.pointerEvents = "auto";
+      });
+      initVideosInSection(targetSection);
+      fetchUserLocation();
+      const indexNow = parseInt(sectionId.split("-")[1]) || 0;
+      const indexFurthest = parseInt(quizAnalytics.furthestSection.split("-")[1]) || 0;
+      if (indexNow > indexFurthest) quizAnalytics.furthestSection = sectionId;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const firstSection = document.querySelector(".quiz-section");
+    if (firstSection && firstSection.id) {
+      showSection(firstSection.id);
+      dataSent = false;
+    }
+  });
+
+  document.querySelectorAll(".mobile-button").forEach(function (button) {
+    const hoverColor = button.getAttribute("data-hover-color");
+    if (hoverColor) button.style.setProperty("--hover-color", hoverColor);
+  });
+
+  function initButtonSounds() {
+    document.querySelectorAll('.mobile-button[data-sound]').forEach(function(btn) {
+      var soundType = btn.getAttribute('data-sound');
+      if (!soundType || soundType === 'none') return;
+      var volume = parseInt(btn.getAttribute('data-sound-volume') || '50') / 100;
+      var customUrl = btn.getAttribute('data-sound-url') || '';
+      if (soundType === 'custom' && customUrl) {
+        var preloaded = new Audio(customUrl);
+        preloaded.preload = 'auto';
+        preloaded.volume = volume;
+        preloaded.load();
+        btn._preloadedAudio = preloaded;
+      }
+      btn.addEventListener('click', function() {
+        if (soundType === 'custom' && btn._preloadedAudio) {
+          var a = btn._preloadedAudio;
+          a.volume = volume;
+          a.currentTime = 0;
+          a.play().catch(function(){});
+        } else {
+          playButtonSound(soundType, volume);
+        }
+      });
+    });
+  }
+  function playButtonSound(type, vol) {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var sounds = {
+      click: [{f:800,d:0.06}],
+      pop: [{f:400,d:0.08},{f:600,d:0.06}],
+      success: [{f:523,d:0.2},{f:784,d:0.3}],
+      celebration: [{f:523,d:0.2},{f:659,d:0.2},{f:784,d:0.2},{f:1047,d:0.3}],
+      whoosh: [{f:200,d:0.05},{f:800,d:0.15}],
+      coin: [{f:987,d:0.1},{f:1319,d:0.15}],
+      money: [{f:1319,d:0.08},{f:1568,d:0.08},{f:1760,d:0.06},{f:2093,d:0.12}],
+      notification: [{f:880,d:0.12},{f:1100,d:0.12}]
+    };
+    var notes = sounds[type] || sounds.click;
+    var t = ctx.currentTime;
+    notes.forEach(function(n) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(n.f, t);
+      gain.gain.setValueAtTime(vol * 0.15, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + n.d);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + n.d + 0.05);
+      t += n.d * 0.8;
+    });
+  }
+  initButtonSounds();
+
+  function initializeVideo(videoDiv) {
+    var uniqueId = videoDiv.id.split("-")[1];
+    var startOverlay = videoDiv.querySelector('[id^="start-overlay"]');
+    var pauseOverlay = videoDiv.querySelector('[id^="pause-overlay"]');
+    var blurBg = videoDiv.querySelector('[id^="blur-bg"]');
+    var iframe = videoDiv.querySelector("iframe");
+    if (!iframe || videoDiv._initialized) return;
+    videoDiv._initialized = true;
+
+    // Forçar overlays visíveis no início
+    if (startOverlay) { startOverlay.style.display = "flex"; startOverlay.style.zIndex = "200"; }
+    if (blurBg) { blurBg.style.display = "block"; blurBg.style.zIndex = "199"; }
+    if (pauseOverlay) { pauseOverlay.style.display = "none"; }
+
+    // Ao clicar no overlay: esconder tudo instantaneamente
+    var isVideoPlaying = false;
+    function playVideo() {
+      isVideoPlaying = true;
+      if (startOverlay) startOverlay.style.display = "none";
+      if (pauseOverlay) pauseOverlay.style.display = "none";
+      if (blurBg) blurBg.style.display = "none";
+      // Adicionar autoplay=1 na URL do iframe
+      var src = iframe.src;
+      if (src && !src.includes("autoplay=1")) {
+        iframe.src = src + "&autoplay=1";
+      }
+      // Marcar tempo de início para botões vinculados
+      videoDiv._playStartTime = Date.now();
+      videoTimes.set(uniqueId, 0);
+      if (!videoDiv._timeInterval) {
+        videoDiv._timeInterval = setInterval(function() {
+          if (videoDiv._playStartTime) {
+            var elapsed = (Date.now() - videoDiv._playStartTime) / 1000;
+            videoTimes.set(uniqueId, elapsed);
+          }
+        }, 500);
+      }
+    }
+    if (startOverlay) startOverlay.onclick = playVideo;
+    if (pauseOverlay) pauseOverlay.onclick = playVideo;
+  }
+
+  function initVideosInSection(section) {
+    if (!section) return;
+    section.querySelectorAll(".mobile-video").forEach(initializeVideo);
+  }
+
+  // Botões vinculados ao vídeo: mostrar após X segundos
+  function initVideoLinkedButtons() {
+    var buttons = document.querySelectorAll("[data-video-trigger]");
+    if (!buttons.length) return;
+    setInterval(function() {
+      buttons.forEach(function(btn) {
+        var uid = btn.getAttribute("data-video-trigger").replace("video-", "");
+        var triggerTime = parseFloat(btn.getAttribute("data-video-time") || "0");
+        var ct = videoTimes.get(uid);
+        if (ct !== undefined && ct >= triggerTime && !btn.classList.contains("video-btn-visible")) {
+          btn.classList.add("video-btn-visible");
+          btn.style.display = "";
+          btn.style.opacity = "0";
+          setTimeout(function(){ btn.style.opacity = "1"; }, 50);
+        }
+      });
+    }, 500);
+  }
+
+  // Observer para inicializar vídeos quando seção fica ativa
+  var videoObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.target.classList && m.target.classList.contains("active")) {
+        initVideosInSection(m.target);
+      }
+    });
+  });
+  document.querySelectorAll(".quiz-section").forEach(function(s) {
+    videoObserver.observe(s, { attributes: true, attributeFilter: ["class"] });
+  });
+  // Preload: inicializa todos os vídeos de todas as seções em background
+  // para que quando o usuário chegar na seção, o iframe já esteja carregado
+  setTimeout(function() {
+    document.querySelectorAll(".mobile-video").forEach(initializeVideo);
+  }, 1000);
+  initVideoLinkedButtons();
+</script>
+  </body>
+</html>
