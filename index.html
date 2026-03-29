@@ -241,16 +241,16 @@
 import { FFmpeg } from 'https://esm.sh/@ffmpeg/ffmpeg@0.12.10';
 import { fetchFile } from 'https://esm.sh/@ffmpeg/util@0.12.1';
 
-// ============ STATE ============
-let audioFile = null;
-let groqResponse = null; // full Groq JSON with words[]
-let scenes = [];
-let selectedVideos = {}; // { sceneIndex: { url, source, id, duration, width, height } }
-let videoFormat = 'vertical'; // 'vertical' | 'horizontal'
-let ffmpeg = null;
-let ffmpegLoaded = false;
-
-window.audioFile = null;
+// ============ STATE (on window so inline onclick can access) ============
+const S = window._S = {
+  audioFile: null,
+  groqResponse: null,
+  scenes: [],
+  selectedVideos: {},
+  videoFormat: 'vertical',
+  ffmpeg: null,
+  ffmpegLoaded: false,
+};
 
 // ============ CONFIG / KEYS ============
 function loadKeys() {
@@ -270,7 +270,7 @@ loadKeys();
 
 // ============ FORMAT ============
 window.setFormat = function(fmt) {
-  videoFormat = fmt;
+  S.videoFormat = fmt;
   document.querySelectorAll('.format-btn').forEach(b => b.classList.toggle('active', b.dataset.format === fmt));
 };
 
@@ -283,15 +283,14 @@ uploadArea.addEventListener('drop', e => {
   uploadArea.classList.remove('dragover');
   if (e.dataTransfer.files.length) {
     document.getElementById('audioInput').files = e.dataTransfer.files;
-    handleFileUpload(document.getElementById('audioInput'));
+    window.handleFileUpload(document.getElementById('audioInput'));
   }
 });
 
 window.handleFileUpload = function(input) {
   if (!input.files.length) return;
-  audioFile = input.files[0];
-  window.audioFile = audioFile;
-  document.getElementById('fileName').textContent = audioFile.name + ' (' + (audioFile.size / 1024 / 1024).toFixed(1) + ' MB)';
+  S.audioFile = input.files[0];
+  document.getElementById('fileName').textContent = S.audioFile.name + ' (' + (S.audioFile.size / 1024 / 1024).toFixed(1) + ' MB)';
   document.getElementById('uploadInfo').classList.add('visible');
 };
 
@@ -299,7 +298,7 @@ window.handleFileUpload = function(input) {
 window.transcribe = async function() {
   const key = document.getElementById('groqKey').value;
   if (!key) { alert('Insira a API key do Groq nas configuracoes'); return; }
-  if (!audioFile) return;
+  if (!S.audioFile) { alert('Selecione um arquivo de audio primeiro'); return; }
 
   const loader = document.getElementById('transcribeLoader');
   const btn = document.getElementById('transcribeBtn');
@@ -307,7 +306,7 @@ window.transcribe = async function() {
 
   try {
     const formData = new FormData();
-    formData.append('file', audioFile);
+    formData.append('file', S.audioFile);
     formData.append('model', 'whisper-large-v3-turbo');
     formData.append('response_format', 'verbose_json');
     formData.append('timestamp_granularities[]', 'word');
@@ -319,10 +318,10 @@ window.transcribe = async function() {
     });
 
     if (!resp.ok) throw new Error('Groq API error: ' + resp.status + ' ' + (await resp.text()));
-    groqResponse = await resp.json();
+    S.groqResponse = await resp.json();
 
     const box = document.getElementById('transcriptionBox');
-    box.textContent = groqResponse.text;
+    box.textContent = S.groqResponse.text;
     box.classList.add('visible');
 
     divideScenes();
@@ -336,8 +335,8 @@ window.transcribe = async function() {
 
 // ============ SCENE DIVISION ============
 function divideScenes() {
-  if (!groqResponse || !groqResponse.words) return;
-  const words = groqResponse.words;
+  if (!S.groqResponse || !S.groqResponse.words) return;
+  const words = S.groqResponse.words;
   const minW = parseInt(document.getElementById('sliderMin').value);
   const idealW = parseInt(document.getElementById('sliderIdeal').value);
   const maxW = parseInt(document.getElementById('sliderMax').value);
@@ -422,7 +421,7 @@ function divideScenes() {
     pos = end;
   }
 
-  scenes = output;
+  S.scenes = output;
   renderScenes();
 }
 
@@ -437,17 +436,17 @@ window.updateSliders = function() {
   if (ideal < min) { document.getElementById('sliderIdeal').value = min; document.getElementById('idealVal').textContent = min; }
   if (max < ideal) { document.getElementById('sliderMax').value = ideal; document.getElementById('maxVal').textContent = ideal; }
 
-  if (groqResponse) divideScenes();
+  if (S.groqResponse) divideScenes();
 };
 
 // ============ RENDER SCENES ============
 function renderScenes() {
   const list = document.getElementById('scenesList');
-  document.getElementById('sceneCount').textContent = scenes.length;
+  document.getElementById('sceneCount').textContent = S.scenes.length;
   list.innerHTML = '';
 
-  scenes.forEach((scene, idx) => {
-    const hasVid = selectedVideos[idx];
+  S.scenes.forEach((scene, idx) => {
+    const hasVid = S.selectedVideos[idx];
     const keywords = extractKeywords(scene.text);
 
     const card = document.createElement('div');
@@ -500,16 +499,15 @@ window.searchScene = async function(idx) {
 
 window.searchAllScenes = async function() {
   const status = document.getElementById('searchAllStatus');
-  for (let i = 0; i < scenes.length; i++) {
-    status.textContent = `Buscando cena ${i + 1} de ${scenes.length}...`;
+  for (let i = 0; i < S.scenes.length; i++) {
+    status.textContent = `Buscando cena ${i + 1} de ${S.scenes.length}...`;
     const query = document.getElementById('search-' + i).value.trim();
     if (!query) continue;
     const grid = document.getElementById('grid-' + i);
     grid.innerHTML = '<span class="loader"></span>';
     const results = await searchVideos(query);
     renderVideoGrid(grid, results, i);
-    // Small delay to avoid rate limits
-    if (i < scenes.length - 1) await new Promise(r => setTimeout(r, 300));
+    if (i < S.scenes.length - 1) await new Promise(r => setTimeout(r, 300));
   }
   status.textContent = 'Busca completa!';
   setTimeout(() => status.textContent = '', 3000);
@@ -519,26 +517,20 @@ async function searchVideos(query) {
   const pexelsKey = document.getElementById('pexelsKey').value;
   const pixabayKey = document.getElementById('pixabayKey').value;
   const results = [];
-
   const promises = [];
 
   if (pexelsKey) {
     promises.push(
-      fetch(`/api/pexels?query=${encodeURIComponent(query)}&per_page=15&orientation=${videoFormat === 'vertical' ? 'portrait' : 'landscape'}`, {
+      fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=15&orientation=${S.videoFormat === 'vertical' ? 'portrait' : 'landscape'}`, {
         headers: { 'Authorization': pexelsKey }
       }).then(r => r.json()).then(data => {
         (data.videos || []).forEach(v => {
-          const file = pickBestFile(v.video_files, videoFormat);
+          const file = pickBestFile(v.video_files);
           if (file) {
             results.push({
-              source: 'pexels',
-              id: v.id,
-              duration: v.duration,
-              width: file.width,
-              height: file.height,
-              url: file.link,
-              preview: v.video_pictures?.[0]?.picture || '',
-              thumbnail: v.image
+              source: 'pexels', id: v.id, duration: v.duration,
+              width: file.width, height: file.height, url: file.link,
+              preview: v.video_pictures?.[0]?.picture || '', thumbnail: v.image
             });
           }
         });
@@ -548,17 +540,13 @@ async function searchVideos(query) {
 
   if (pixabayKey) {
     promises.push(
-      fetch(`/api/pixabay?key=${pixabayKey}&q=${encodeURIComponent(query)}&per_page=15`).then(r => r.json()).then(data => {
+      fetch(`https://pixabay.com/api/videos/?key=${pixabayKey}&q=${encodeURIComponent(query)}&per_page=15`).then(r => r.json()).then(data => {
         (data.hits || []).forEach(v => {
           const file = v.videos?.medium || v.videos?.small || v.videos?.large;
           if (file) {
             results.push({
-              source: 'pixabay',
-              id: v.id,
-              duration: v.duration,
-              width: file.width,
-              height: file.height,
-              url: file.url,
+              source: 'pixabay', id: v.id, duration: v.duration,
+              width: file.width, height: file.height, url: file.url,
               preview: `https://i.vimeocdn.com/video/${v.picture_id}_295x166.jpg`,
               thumbnail: `https://i.vimeocdn.com/video/${v.picture_id}_295x166.jpg`
             });
@@ -572,12 +560,10 @@ async function searchVideos(query) {
   return results;
 }
 
-function pickBestFile(files, format) {
+function pickBestFile(files) {
   if (!files || !files.length) return null;
   const sorted = [...files].sort((a, b) => b.width - a.width);
-  // Try to find a good resolution (not 4K)
-  const good = sorted.find(f => f.width <= 1920 && f.width >= 640);
-  return good || sorted[sorted.length - 1];
+  return sorted.find(f => f.width <= 1920 && f.width >= 640) || sorted[sorted.length - 1];
 }
 
 function renderVideoGrid(grid, results, sceneIdx) {
@@ -586,8 +572,8 @@ function renderVideoGrid(grid, results, sceneIdx) {
     return;
   }
   grid.innerHTML = '';
-  results.forEach((vid, vidIdx) => {
-    const isSelected = selectedVideos[sceneIdx]?.id === vid.id && selectedVideos[sceneIdx]?.source === vid.source;
+  results.forEach((vid) => {
+    const isSelected = S.selectedVideos[sceneIdx]?.id === vid.id && S.selectedVideos[sceneIdx]?.source === vid.source;
     const card = document.createElement('div');
     card.className = 'video-card' + (isSelected ? ' selected' : '');
     card.innerHTML = `
@@ -596,62 +582,42 @@ function renderVideoGrid(grid, results, sceneIdx) {
       <span class="duration-badge">${vid.duration}s</span>
       <div class="check-mark">&#10003;</div>
     `;
-    card.addEventListener('mouseenter', () => {
-      const img = card.querySelector('img');
-      if (vid.preview && vid.source === 'pexels') {
-        // For pexels we can try video preview
-      }
+    card.addEventListener('click', (e) => {
+      S.selectedVideos[sceneIdx] = vid;
+      grid.querySelectorAll('.video-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+
+      const preview = document.getElementById('preview-' + sceneIdx);
+      preview.innerHTML = `
+        <video src="${vid.url}" width="120" muted autoplay loop></video>
+        <span>Video selecionado (${vid.source}) - ${vid.duration}s - ${vid.width}x${vid.height}</span>
+        <button class="btn btn-small" style="background:#c0392b;color:#fff;margin-left:auto" onclick="removeVideo(${sceneIdx})">X</button>
+      `;
+      preview.classList.add('visible');
+      grid.closest('.scene-card').classList.add('has-video');
+      checkExportReady();
     });
-    card.addEventListener('click', () => selectVideo(sceneIdx, vid, grid));
     grid.appendChild(card);
   });
 }
 
-function selectVideo(sceneIdx, vid, grid) {
-  selectedVideos[sceneIdx] = vid;
-  // Update grid selection
-  grid.querySelectorAll('.video-card').forEach((c, i) => c.classList.remove('selected'));
-  event.currentTarget.classList.add('selected');
-
-  // Update preview
-  const preview = document.getElementById('preview-' + sceneIdx);
-  preview.innerHTML = `
-    <video src="${vid.url}" width="120" muted autoplay loop></video>
-    <span>Video selecionado (${vid.source}) - ${vid.duration}s - ${vid.width}x${vid.height}</span>
-    <button class="btn btn-small" style="background:#c0392b;color:#fff;margin-left:auto" onclick="removeVideo(${sceneIdx})">X</button>
-  `;
-  preview.classList.add('visible');
-
-  // Mark scene card
-  const card = document.getElementById('grid-' + sceneIdx).closest('.scene-card');
-  card.classList.add('has-video');
-
-  checkExportReady();
-}
-
 window.removeVideo = function(idx) {
-  delete selectedVideos[idx];
+  delete S.selectedVideos[idx];
   const preview = document.getElementById('preview-' + idx);
   preview.innerHTML = '';
   preview.classList.remove('visible');
-  const card = document.getElementById('grid-' + idx).closest('.scene-card');
-  card.classList.remove('has-video');
-  // Deselect in grid
+  document.getElementById('grid-' + idx).closest('.scene-card').classList.remove('has-video');
   document.getElementById('grid-' + idx).querySelectorAll('.video-card').forEach(c => c.classList.remove('selected'));
   checkExportReady();
 };
 
 function checkExportReady() {
-  const allSelected = scenes.length > 0 && scenes.every((_, i) => selectedVideos[i]);
-  document.getElementById('exportSection').style.display = scenes.length > 0 ? 'block' : 'none';
+  document.getElementById('exportSection').style.display = S.scenes.length > 0 ? 'block' : 'none';
 }
 
 // ============ EXPORT JSON ============
 window.exportJSON = function() {
-  const data = scenes.map((s, i) => ({
-    ...s,
-    video: selectedVideos[i] || null
-  }));
+  const data = S.scenes.map((s, i) => ({ ...s, video: S.selectedVideos[i] || null }));
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -661,22 +627,22 @@ window.exportJSON = function() {
 
 // ============ FFMPEG EXPORT ============
 async function loadFFmpeg() {
-  if (ffmpegLoaded) return;
-  ffmpeg = new FFmpeg();
-  ffmpeg.on('progress', ({ progress }) => {
+  if (S.ffmpegLoaded) return;
+  S.ffmpeg = new FFmpeg();
+  S.ffmpeg.on('progress', ({ progress }) => {
     const pct = Math.round(progress * 100);
     document.getElementById('progressFill').style.width = pct + '%';
     document.getElementById('progressLabel').textContent = `Processando... ${pct}%`;
   });
-  await ffmpeg.load({
+  await S.ffmpeg.load({
     coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm/ffmpeg-core.js',
     wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm/ffmpeg-core.wasm',
   });
-  ffmpegLoaded = true;
+  S.ffmpegLoaded = true;
 }
 
 window.exportVideo = async function() {
-  const missing = scenes.filter((_, i) => !selectedVideos[i]);
+  const missing = S.scenes.filter((_, i) => !S.selectedVideos[i]);
   if (missing.length > 0) {
     alert(`Faltam videos para ${missing.length} cena(s). Selecione videos para todas as cenas.`);
     return;
@@ -692,88 +658,74 @@ window.exportVideo = async function() {
   try {
     await loadFFmpeg();
 
-    const isVertical = videoFormat === 'vertical';
-    const targetW = isVertical ? 1080 : 1920;
-    const targetH = isVertical ? 1920 : 1080;
+    const isVertical = S.videoFormat === 'vertical';
 
-    // Write audio file
     status.textContent = 'Preparando audio...';
-    const audioData = await fetchFile(window.audioFile);
-    await ffmpeg.writeFile('audio.mp3', audioData);
+    const audioData = await fetchFile(S.audioFile);
+    await S.ffmpeg.writeFile('audio.mp3', audioData);
 
-    // Download and process each scene video
     let fileList = '';
-    for (let i = 0; i < scenes.length; i++) {
-      const scene = scenes[i];
-      const vid = selectedVideos[i];
-      status.textContent = `Baixando video cena ${i + 1}/${scenes.length}...`;
+    for (let i = 0; i < S.scenes.length; i++) {
+      const scene = S.scenes[i];
+      const vid = S.selectedVideos[i];
+      status.textContent = `Baixando video cena ${i + 1}/${S.scenes.length}...`;
 
       const videoData = await fetchFile(vid.url);
       const inputName = `input_${i}.mp4`;
       const outputName = `scene_${i}.mp4`;
-      await ffmpeg.writeFile(inputName, videoData);
+      await S.ffmpeg.writeFile(inputName, videoData);
 
-      // Calculate duration (extend to next scene start if possible)
       let duration = scene.duration;
-      if (i < scenes.length - 1) {
-        duration = scenes[i + 1].start_time - scene.start_time;
+      if (i < S.scenes.length - 1) {
+        duration = S.scenes[i + 1].start_time - scene.start_time;
       }
       if (i === 0 && scene.start_time > 0) {
         duration += scene.start_time;
       }
       duration = parseFloat(duration.toFixed(3));
 
-      status.textContent = `Processando cena ${i + 1}/${scenes.length}...`;
+      status.textContent = `Processando cena ${i + 1}/${S.scenes.length}...`;
 
       const scaleFilter = isVertical
         ? `scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920`
         : `scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:-1:-1:color=black`;
 
-      await ffmpeg.exec([
-        '-y', '-stream_loop', '-1',
-        '-i', inputName,
+      await S.ffmpeg.exec([
+        '-y', '-stream_loop', '-1', '-i', inputName,
         '-vf', `trim=duration=${duration},setpts=PTS-STARTPTS,${scaleFilter}`,
         '-r', '30', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '23', '-an',
         outputName
       ]);
 
       fileList += `file '${outputName}'\n`;
-      await ffmpeg.deleteFile(inputName);
+      await S.ffmpeg.deleteFile(inputName);
     }
 
-    // Concatenate
     status.textContent = 'Juntando todos os clipes...';
-    await ffmpeg.writeFile('list.txt', new TextEncoder().encode(fileList));
+    await S.ffmpeg.writeFile('list.txt', new TextEncoder().encode(fileList));
 
-    await ffmpeg.exec([
+    await S.ffmpeg.exec([
       '-y', '-f', 'concat', '-safe', '0', '-i', 'list.txt',
-      '-i', 'audio.mp3',
-      '-map', '0:v', '-map', '1:a',
-      '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k',
-      '-shortest',
+      '-i', 'audio.mp3', '-map', '0:v', '-map', '1:a',
+      '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest',
       'output.mp4'
     ]);
 
-    // Read and download
     status.textContent = 'Finalizando...';
-    const outputData = await ffmpeg.readFile('output.mp4');
+    const outputData = await S.ffmpeg.readFile('output.mp4');
     const blob = new Blob([outputData.buffer], { type: 'video/mp4' });
-    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
+    a.href = URL.createObjectURL(blob);
     a.download = 'video_final.mp4';
     a.click();
 
     status.textContent = 'Video gerado com sucesso! Download iniciado.';
     document.getElementById('progressFill').style.width = '100%';
 
-    // Cleanup
-    for (let i = 0; i < scenes.length; i++) {
-      try { await ffmpeg.deleteFile(`scene_${i}.mp4`); } catch {}
-    }
-    try { await ffmpeg.deleteFile('list.txt'); } catch {}
-    try { await ffmpeg.deleteFile('audio.mp3'); } catch {}
-    try { await ffmpeg.deleteFile('output.mp4'); } catch {}
+    for (let i = 0; i < S.scenes.length; i++) { try { await S.ffmpeg.deleteFile(`scene_${i}.mp4`); } catch {} }
+    try { await S.ffmpeg.deleteFile('list.txt'); } catch {}
+    try { await S.ffmpeg.deleteFile('audio.mp3'); } catch {}
+    try { await S.ffmpeg.deleteFile('output.mp4'); } catch {}
 
   } catch (err) {
     status.textContent = 'Erro: ' + err.message;
