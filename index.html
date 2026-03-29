@@ -176,9 +176,9 @@
   <div class="section">
     <div class="section-title">1. Upload do Audio</div>
     <div class="upload-area" id="uploadArea" onclick="document.getElementById('audioInput').click()">
-      <input type="file" id="audioInput" accept="audio/*,video/*" onchange="handleFileUpload(this)">
+      <input type="file" id="audioInput" accept=".flac,.mp3,.mp4,.mpeg,.mpga,.m4a,.ogg,.opus,.wav,.webm" onchange="handleFileUpload(this)">
       <p><strong>Clique ou arraste</strong> o arquivo de audio aqui</p>
-      <p style="font-size:12px; margin-top:4px">MP3, WAV, M4A, MP4, etc.</p>
+      <p style="font-size:12px; margin-top:4px">MP3, WAV, M4A, OGG, FLAC, MP4, WEBM</p>
     </div>
     <div class="upload-info" id="uploadInfo">
       <span id="fileName"></span>
@@ -305,6 +305,13 @@ window.transcribe = async function() {
   loader.style.display = 'inline'; btn.disabled = true;
 
   try {
+    // Check supported formats
+    const supported = ['flac','mp3','mp4','mpeg','mpga','m4a','ogg','opus','wav','webm'];
+    const ext = S.audioFile.name.split('.').pop().toLowerCase();
+    if (!supported.includes(ext)) {
+      throw new Error('Formato ".' + ext + '" nao suportado. Use: ' + supported.join(', '));
+    }
+
     const formData = new FormData();
     formData.append('file', S.audioFile);
     formData.append('model', 'whisper-large-v3-turbo');
