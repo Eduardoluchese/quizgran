@@ -1,53 +1,788 @@
 <!DOCTYPE html>
-    <html lang="pt-BR">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Quiz Exportado</title>
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor de Video por Cenas</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f0f0f; --surface: #1a1a2e; --surface2: #16213e; --accent: #e94560;
+    --accent2: #0f3460; --text: #eee; --text2: #999; --border: #2a2a4a;
+    --success: #00c853; --pexels: #05a081; --pixabay: #4dc247;
+  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-      <script type="module" crossorigin>(function(){let e=document.createElement(`link`).relList;if(e&&e.supports&&e.supports(`modulepreload`))return;for(let e of document.querySelectorAll(`link[rel="modulepreload"]`))n(e);new MutationObserver(e=>{for(let t of e)if(t.type===`childList`)for(let e of t.addedNodes)e.tagName===`LINK`&&e.rel===`modulepreload`&&n(e)}).observe(document,{childList:!0,subtree:!0});function t(e){let t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin===`use-credentials`?t.credentials=`include`:e.crossOrigin===`anonymous`?t.credentials=`omit`:t.credentials=`same-origin`,t}function n(e){if(e.ep)return;e.ep=!0;let n=t(e);fetch(e.href,n)}})();var e=[{startIndex:0,endIndex:1,elementId:`button-1774725437090`}],t={webhookUrl:`https://script.google.com/macros/s/AKfycbzl-OEF6f7yhlSJaLrJYLaa58vXPVLNPe_i3omnAMLzPjLWrYUDJISccDIcR6mplsOVIg/exec`,quizId:`quiz_`+Date.now(),quizName:`Meu Quiz`,quizCategory:`Teste`},n={quizName:t.quizName,startTime:Date.now(),endTime:null,furthestSection:`section-0`,responses:{},city:``,state:``,postalCode:``,device:``,nome:``,email:``,whatsapp:``};function r(){let e=navigator.userAgent;return/android/i.test(e)?`Android`:/iPhone|iPad|iPod/i.test(e)?`iOS`:/Windows Phone/i.test(e)?`Windows Phone`:/Macintosh/i.test(e)?`Mac`:/Windows/i.test(e)?`Windows`:/Linux/i.test(e)?`Linux`:`Other`}n.device=r();var i=!1;function a(){if(i)return;i=!0,n.endTime=Date.now(),n.nome=u.nome||``,n.email=u.email||``,n.whatsapp=u.whatsapp||``;let e=new Blob([new URLSearchParams({data:JSON.stringify([n])})],{type:`application/x-www-form-urlencoded`});navigator.sendBeacon(t.webhookUrl,e)}function o(){document.visibilityState===`hidden`&&a()}window.addEventListener(`pagehide`,a),window.addEventListener(`beforeunload`,a),document.addEventListener(`visibilitychange`,o),document.addEventListener(`click`,function(t){let r=t.target.closest(`.mobile-button`);if(r){if(r.disabled||r.style.pointerEvents===`none`)return;let t=r.id,i=e.find(e=>e.elementId===t);i&&(n.responses[`section_`+i.startIndex]=r.querySelector(`.text`).textContent,d(`section-`+i.endIndex))}});var s=!1;async function c(){if(!s){s=!0;try{let e=await fetch(`https://ipapi.co/json/`);if(!e.ok)throw Error(`ipapi.co falhou`);let t=await e.json();n.city=t.city||`Desconhecida`,n.state=t.region||`Desconhecido`,n.postalCode=t.postal||`Desconhecido`}catch{n.city=`Desconhecida`,n.state=`Desconhecido`,n.postalCode=`Desconhecido`}}}function l(){document.querySelectorAll(`.mobile-video iframe`).forEach(function(e){try{e.contentWindow.postMessage(JSON.stringify({event:`command`,func:`pauseVideo`,args:``}),`*`)}catch{}})}var u={};function d(e){l();var t={"zoom-in":`transZoomIn`};document.querySelectorAll(`.quiz-section`).forEach(function(e){e.style.display=`none`,e.style.opacity=`0`,e.style.animation=``,e.querySelectorAll(`.mobile-button`).forEach(e=>{e.style.opacity=`0`,e.style.transition=`none`,e.style.pointerEvents=`none`})});var r=document.getElementById(e);if(r){r.style.display=`flex`,r.style.flexDirection=`column`,r.style.alignItems=`center`,r.style.opacity=`1`;var i=r.getAttribute(`data-transition`)||`none`,a=r.getAttribute(`data-transition-duration`)||`0.5`;i!==`none`&&t[i]&&(r.style.animation=t[i]+` `+a+`s ease forwards`),window.scrollTo({top:0,behavior:`auto`}),document.documentElement.scrollTop=0,document.body.scrollTop=0,r.querySelectorAll(`.mobile-button`).forEach(e=>{e.style.opacity=`1`,e.style.transition=`opacity 0.3s ease`,e.style.pointerEvents=`auto`}),m(r),c(),(parseInt(e.split(`-`)[1])||0)>(parseInt(n.furthestSection.split(`-`)[1])||0)&&(n.furthestSection=e)}}document.addEventListener(`DOMContentLoaded`,function(){let e=document.querySelector(`.quiz-section`);e&&e.id&&(d(e.id),i=!1)}),document.querySelectorAll(`.mobile-button`).forEach(function(e){let t=e.getAttribute(`data-hover-color`);t&&e.style.setProperty(`--hover-color`,t)});function f(){document.querySelectorAll(`.mobile-video iframe`).forEach(function(e){if(!e._preloaded){e._preloaded=!0;var t=e.src;t&&!t.includes(`enablejsapi=1`)&&(e.src=t+`&enablejsapi=1`)}})}setTimeout(f,500);function p(e){e.id.split(`-`)[1];var t=e.querySelector(`[id^="start-overlay"]`),n=e.querySelector(`[id^="pause-overlay"]`),r=e.querySelector(`[id^="blur-bg"]`),i=e.querySelector(`iframe`),a=e.querySelector(`.video-container`);if(!i||e._initialized)return;e._initialized=!0,t&&(t.style.display=`flex`,t.style.zIndex=`200`),r&&(r.style.display=`block`,r.style.zIndex=`199`),n&&(n.style.display=`none`),i.style.pointerEvents=`none`;var o=i.src;o&&!o.includes(`enablejsapi=1`)&&(i.src=o+`&enablejsapi=1`);var s=!1;function c(e){try{i.contentWindow.postMessage(JSON.stringify({event:`command`,func:e,args:``}),`*`)}catch{}}function l(){s=!0,t&&(t.style.display=`none`),n&&(n.style.display=`none`),r&&(r.style.display=`none`),c(`playVideo`)}function u(){s=!1,n&&(n.style.display=`flex`),r&&(r.style.display=`block`),c(`pauseVideo`)}t&&(t.onclick=function(e){e.stopPropagation(),l()}),n&&(n.onclick=function(e){e.stopPropagation(),l()}),a&&a.addEventListener(`click`,function(e){e.target.closest(`.overlay`)||(e.stopPropagation(),s&&u())})}function m(e){e&&e.querySelectorAll(`.mobile-video`).forEach(p)}setTimeout(function(){document.querySelectorAll(`.mobile-video`).forEach(p)},1e3);</script>
-      <style rel="stylesheet" crossorigin>body{justify-content:center;align-items:flex-start;min-height:100vh;margin:0;padding:0;font-family:Poppins,sans-serif;line-height:1.3;display:flex}#quiz-container{flex-direction:column;align-items:center;width:100%;min-height:100vh;display:flex}.quiz-section{box-sizing:border-box;width:100%;min-height:100vh;padding:20px 0;display:none}.content{box-sizing:border-box;width:100%;max-width:600px;margin:0 auto;padding:0 20px}h1,p{font-weight:inherit;font-style:inherit;font-weight:400!important}.mobile-button{cursor:pointer;border:1px solid;border-radius:.75rem;align-items:center;width:100%;min-height:65px;margin-bottom:10px;font-size:20px;transition:background .3s;display:flex;position:relative}.mobile-button:hover{background:linear-gradient(45deg, var(--hover-color), var(--hover-color))!important}.mobile-button .emoji{flex-shrink:0;margin-left:10px;margin-right:15px;font-size:40px}.mobile-button .text{text-align:left;flex:1}.mobile-button a{color:inherit;align-items:center;width:100%;height:100%;text-decoration:none;display:flex}@keyframes transZoomIn{0%{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}.mobile-image{width:100%;margin-bottom:10px;display:block}.mobile-image img{object-fit:contain;border-radius:1rem;width:100%;height:auto;display:block}.mobile-video .container{max-width:600px;margin:0 auto;container-type:inline-size}.mobile-video .video-container{cursor:pointer;background-color:#000;border-radius:1rem;width:100%;height:0;padding-bottom:56.25%;position:relative;overflow:hidden}.mobile-video .video-iframe,.mobile-video .video-container iframe{z-index:1;border:none;width:100%;height:100%;position:absolute;top:0;left:0}.mobile-video .blur-background{-webkit-backdrop-filter:blur(8px);z-index:199;width:calc(100% + 2px);height:calc(100% + 2px);display:block;position:absolute;top:-1px;left:-1px}.mobile-video .overlay{color:#fff;z-index:200;text-align:center;cursor:pointer;pointer-events:auto;background-color:#5d3f92;border-radius:8px;flex-direction:column;justify-content:center;align-items:center;gap:2cqw;width:50%;height:40%;padding:2cqw;display:flex;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}.mobile-video .overlay-title{text-transform:uppercase;margin:0;font-family:Arial,sans-serif;font-size:5cqw;font-weight:700!important}.mobile-video .overlay-text{margin:0;font-family:Arial,sans-serif;font-size:5cqw}.mobile-video .play-icon{height:50%;position:relative}.mobile-video .top-overlay,.mobile-video .bottom-overlay{z-index:300;pointer-events:auto;background-color:#0000;width:100%;position:absolute;left:0}.mobile-video .top-overlay{height:20%;top:0}.mobile-video .bottom-overlay{height:20%;bottom:0}.mobile-video .hidden{display:none}.mobile-video .play-icon path,.mobile-video .play-icon circle{stroke-width:1.5px;transition:all .3s}.mobile-button,.mobile-image,.mobile-video .container{width:100%;margin:0 auto 40px}
-/*$vite$:1*/</style>
-    </head>
-    <body>
-       <div id="quiz-container">
-            <section id="section-0" class="quiz-section" data-transition="zoom-in" data-transition-duration="0.5" style="background-color:#ffffff;display:flex;flex-direction:column;align-items:center;opacity:1;">
-                <div class="content" style="color: #000000;">
-                    <button class="mobile-button" id="button-1774725437090" data-bg="#9333A6" data-gradient="#a855f7" data-hover-color="#c084fc" data-border="#9333A6" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(147, 51, 166), rgb(168, 85, 247)); border-color: rgb(147, 51, 166); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); position: relative;"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255);">Texto do Botão</span></button><div id="image-1774725443824" class="mobile-image"><img src="https://placehold.co/600x400" alt="Imagem"></div>
-                </div>
-            </section>
-            <section id="section-1" class="quiz-section" data-transition="zoom-in" data-transition-duration="0.5" style="background-color:#ffffff;">
-                <div class="content" style="color: #000000;">
-                    <button class="mobile-button" id="button-1774725449538" data-bg="#2563eb" data-gradient="#3b82f6" data-hover-color="#93c5fd" data-border="#2563eb" data-text-color="#ffffff" style="background: linear-gradient(135deg, rgb(37, 99, 235), rgb(59, 130, 246)); border-color: rgb(37, 99, 235); border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px);"><span class="emoji">😊</span><span class="text" style="color: rgb(255, 255, 255);">Texto do Botão</span></button><div id="video-1774725451350" class="mobile-video" style="position: relative;" data-overlay-color="#2563eb">
-      <div class="container">
-        <div class="video-container" style="background: url(&quot;https://img.youtube.com/vi/VPYEso5cPgY/hqdefault.jpg&quot;) center center / cover no-repeat rgb(0, 0, 0); padding-bottom: 124.8%;">
-          <iframe id="youtube-video-1774725451350" class="video-iframe" src="https://www.youtube-nocookie.com/embed/VPYEso5cPgY?controls=0&modestbranding=1&showinfo=0&rel=0&fs=0&iv_load_policy=3&disablekb=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
-          <div id="blur-bg-1774725451350" class="blur-background"></div>
-          <div id="start-overlay-1774725451350" class="overlay" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.933), rgba(59, 130, 246, 0.867)); color: rgb(255, 255, 255);">
-            <h1 class="overlay-title">Seu vídeo já começou</h1>
-         <svg class="play-icon" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);">
-            <circle cx="12" cy="12" r="10" stroke="#ffffff" stroke-width="1" fill="none" style=""></circle>
-            <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#ffffff" style=""></path>
-        </svg>
+  /* Header */
+  .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 100; }
+  .header h1 { font-size: 18px; font-weight: 700; white-space: nowrap; }
+  .header-actions { display: flex; gap: 8px; margin-left: auto; }
+  .btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all .2s; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #d63050; }
+  .btn-secondary { background: var(--accent2); color: #fff; }
+  .btn-secondary:hover { background: #1a4a80; }
+  .btn-small { padding: 5px 10px; font-size: 12px; }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
 
-            <p class="overlay-text">Clique para assistir</p>
-          </div>
-          <div id="pause-overlay-1774725451350" class="overlay hidden" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.933), rgba(59, 130, 246, 0.867)); color: rgb(255, 255, 255);">
-            <h1 class="overlay-title">Vídeo pausado</h1>
-            <svg class="play-icon" viewBox="0 0 24 24" fill="white" style="color: rgb(255, 255, 255);">
-              <circle cx="12" cy="12" r="10" stroke="#ffffff" stroke-width="1" fill="none" style=""></circle>
-              <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#ffffff" style=""></path>
-            </svg>
-            <p class="overlay-text">Continuar assistindo</p>
-          </div>
-          <div class="top-overlay"></div>
-          <div class="bottom-overlay"></div>
-        </div>
-      </div></div>
-                </div>
-            </section>
- </div>
+  /* Config Panel */
+  .config-toggle { background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+  .config-panel { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 16px 24px; }
+  .config-panel.open { display: block; }
+  .config-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .config-group label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+  .config-group input[type="text"], .config-group input[type="password"] {
+    width: 100%; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 13px;
+  }
 
+  /* Main Content */
+  .main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+  .section { margin-bottom: 32px; }
+  .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .badge-count { background: var(--accent2); }
+
+  /* Upload Area */
+  .upload-area {
+    border: 2px dashed var(--border); border-radius: 12px; padding: 40px; text-align: center; cursor: pointer; transition: all .2s;
+  }
+  .upload-area:hover, .upload-area.dragover { border-color: var(--accent); background: rgba(233,69,96,.05); }
+  .upload-area input { display: none; }
+  .upload-area p { color: var(--text2); font-size: 14px; margin-top: 8px; }
+  .upload-info { margin-top: 12px; padding: 12px; background: var(--surface2); border-radius: 8px; font-size: 13px; display: none; }
+  .upload-info.visible { display: flex; align-items: center; gap: 12px; }
+
+  /* Sliders */
+  .sliders-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; align-items: end; }
+  .slider-group { flex: 1; min-width: 150px; }
+  .slider-group label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px; }
+  .slider-group input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .slider-val { font-size: 14px; font-weight: 700; color: var(--accent); }
+
+  /* Format selector */
+  .format-row { display: flex; gap: 12px; margin-bottom: 16px; }
+  .format-btn { padding: 8px 16px; border: 2px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); cursor: pointer; font-size: 13px; font-weight: 600; transition: all .2s; }
+  .format-btn.active { border-color: var(--accent); background: rgba(233,69,96,.15); }
+
+  /* Scenes List */
+  .scenes-list { display: flex; flex-direction: column; gap: 12px; }
+  .scene-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; transition: all .2s;
+  }
+  .scene-card.has-video { border-color: var(--success); }
+  .scene-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .scene-num { background: var(--accent); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .scene-times { font-size: 11px; color: var(--text2); margin-left: auto; white-space: nowrap; }
+  .scene-text { font-size: 13px; line-height: 1.5; color: var(--text); margin-bottom: 12px; }
+  .scene-search-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .scene-search-input { flex: 1; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 13px; }
+  .scene-search-input:focus { outline: none; border-color: var(--accent); }
+
+  /* Video Grid */
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; max-height: 400px; overflow-y: auto; padding: 4px; }
+  .video-card {
+    position: relative; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all .2s; background: var(--bg);
+  }
+  .video-card:hover { border-color: var(--accent); transform: scale(1.02); }
+  .video-card.selected { border-color: var(--success); box-shadow: 0 0 12px rgba(0,200,83,.3); }
+  .video-card video, .video-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .video-card .source-badge {
+    position: absolute; top: 6px; left: 6px; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; color: #fff;
+  }
+  .source-pexels { background: var(--pexels); }
+  .source-pixabay { background: var(--pixabay); }
+  .video-card .duration-badge {
+    position: absolute; bottom: 6px; right: 6px; font-size: 10px; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,.7); color: #fff;
+  }
+  .video-card .check-mark {
+    position: absolute; top: 6px; right: 6px; width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 14px;
+  }
+  .video-card.selected .check-mark { display: flex; }
+  .selected-preview { margin-top: 8px; padding: 8px; background: var(--bg); border-radius: 8px; display: none; align-items: center; gap: 12px; font-size: 12px; }
+  .selected-preview.visible { display: flex; }
+  .selected-preview video { width: 120px; border-radius: 6px; }
+
+  /* Loading */
+  .loader { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 200; align-items: center; justify-content: center; flex-direction: column; gap: 16px;
+  }
+  .loading-overlay.visible { display: flex; }
+  .loading-overlay .loader { width: 40px; height: 40px; border-width: 3px; }
+  .loading-text { font-size: 16px; color: var(--text); }
+
+  /* Progress Bar */
+  .progress-container { display: none; margin-top: 16px; }
+  .progress-container.visible { display: block; }
+  .progress-bar { width: 100%; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width .3s; width: 0%; }
+  .progress-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+  /* Export Section */
+  .export-section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .export-status { margin-top: 12px; font-size: 13px; color: var(--text2); }
+
+  /* Transcription display */
+  .transcription-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-top: 12px; font-size: 13px; line-height: 1.6; max-height: 200px; overflow-y: auto; display: none; }
+  .transcription-box.visible { display: block; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #444; }
+
+  /* Search All */
+  .search-all-row { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; padding: 12px; background: var(--surface); border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>Editor de Video por Cenas</h1>
+  <button class="config-toggle" onclick="toggleConfig()">Configuracoes</button>
+  <div class="header-actions">
+    <div class="format-row" style="margin:0">
+      <button class="format-btn active" data-format="vertical" onclick="setFormat('vertical')">Vertical 9:16</button>
+      <button class="format-btn" data-format="horizontal" onclick="setFormat('horizontal')">Horizontal 16:9</button>
+    </div>
+  </div>
+</div>
+
+<!-- Config Panel -->
+<div class="config-panel" id="configPanel">
+  <div class="config-grid">
+    <div class="config-group">
+      <label>Groq API Key</label>
+      <input type="password" id="groqKey" placeholder="gsk_..." oninput="saveKeys()">
+    </div>
+    <div class="config-group">
+      <label>Pexels API Key</label>
+      <input type="password" id="pexelsKey" placeholder="Pexels key..." oninput="saveKeys()">
+    </div>
+    <div class="config-group">
+      <label>Pixabay API Key</label>
+      <input type="password" id="pixabayKey" placeholder="Pixabay key..." oninput="saveKeys()">
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- Upload Section -->
+  <div class="section">
+    <div class="section-title">1. Upload do Audio</div>
+    <div class="upload-area" id="uploadArea" onclick="document.getElementById('audioInput').click()">
+      <input type="file" id="audioInput" accept="audio/*,video/*" onchange="handleFileUpload(this)">
+      <p><strong>Clique ou arraste</strong> o arquivo de audio aqui</p>
+      <p style="font-size:12px; margin-top:4px">MP3, WAV, M4A, MP4, etc.</p>
+    </div>
+    <div class="upload-info" id="uploadInfo">
+      <span id="fileName"></span>
+      <button class="btn btn-primary btn-small" id="transcribeBtn" onclick="transcribe()">Transcrever com Groq</button>
+      <span id="transcribeLoader" style="display:none"><span class="loader"></span></span>
+    </div>
+    <div class="transcription-box" id="transcriptionBox"></div>
+  </div>
+
+  <!-- Scenes Section -->
+  <div class="section" id="scenesSection" style="display:none">
+    <div class="section-title">2. Divisao em Cenas <span class="badge badge-count" id="sceneCount">0</span></div>
+    <div class="sliders-row">
+      <div class="slider-group">
+        <label>Minimo de palavras: <span class="slider-val" id="minVal">10</span></label>
+        <input type="range" id="sliderMin" min="3" max="30" value="10" oninput="updateSliders()">
+      </div>
+      <div class="slider-group">
+        <label>Ideal de palavras: <span class="slider-val" id="idealVal">15</span></label>
+        <input type="range" id="sliderIdeal" min="5" max="40" value="15" oninput="updateSliders()">
+      </div>
+      <div class="slider-group">
+        <label>Maximo de palavras: <span class="slider-val" id="maxVal">18</span></label>
+        <input type="range" id="sliderMax" min="8" max="50" value="18" oninput="updateSliders()">
+      </div>
+    </div>
+
+    <div class="search-all-row">
+      <button class="btn btn-secondary" onclick="searchAllScenes()">Buscar videos para TODAS as cenas</button>
+      <span id="searchAllStatus" style="font-size:12px; color:var(--text2)"></span>
+    </div>
+
+    <div class="scenes-list" id="scenesList"></div>
+  </div>
+
+  <!-- Export Section -->
+  <div class="section" id="exportSection" style="display:none">
+    <div class="section-title">3. Gerar Video Final</div>
+    <div class="export-section">
+      <p style="font-size:13px; color:var(--text2); margin-bottom:12px">Todas as cenas com video selecionado serao cortadas, escaladas e concatenadas com o audio original.</p>
+      <button class="btn btn-primary" id="exportBtn" onclick="exportVideo()">Gerar Video</button>
+      <button class="btn btn-secondary" onclick="exportJSON()" style="margin-left:8px">Exportar JSON</button>
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-label" id="progressLabel">Preparando...</div>
+      </div>
+      <div class="export-status" id="exportStatus"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <span class="loader"></span>
+  <div class="loading-text" id="loadingText">Processando...</div>
+</div>
+
+<script type="module">
+import { FFmpeg } from 'https://esm.sh/@ffmpeg/ffmpeg@0.12.10';
+import { fetchFile } from 'https://esm.sh/@ffmpeg/util@0.12.1';
+
+// ============ STATE ============
+let audioFile = null;
+let groqResponse = null; // full Groq JSON with words[]
+let scenes = [];
+let selectedVideos = {}; // { sceneIndex: { url, source, id, duration, width, height } }
+let videoFormat = 'vertical'; // 'vertical' | 'horizontal'
+let ffmpeg = null;
+let ffmpegLoaded = false;
+
+window.audioFile = null;
+
+// ============ CONFIG / KEYS ============
+function loadKeys() {
+  document.getElementById('groqKey').value = localStorage.getItem('groqKey') || '';
+  document.getElementById('pexelsKey').value = localStorage.getItem('pexelsKey') || '';
+  document.getElementById('pixabayKey').value = localStorage.getItem('pixabayKey') || '';
+}
+window.saveKeys = function() {
+  localStorage.setItem('groqKey', document.getElementById('groqKey').value);
+  localStorage.setItem('pexelsKey', document.getElementById('pexelsKey').value);
+  localStorage.setItem('pixabayKey', document.getElementById('pixabayKey').value);
+};
+window.toggleConfig = function() {
+  document.getElementById('configPanel').classList.toggle('open');
+};
+loadKeys();
+
+// ============ FORMAT ============
+window.setFormat = function(fmt) {
+  videoFormat = fmt;
+  document.querySelectorAll('.format-btn').forEach(b => b.classList.toggle('active', b.dataset.format === fmt));
+};
+
+// ============ FILE UPLOAD ============
+const uploadArea = document.getElementById('uploadArea');
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+uploadArea.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadArea.classList.remove('dragover');
+  if (e.dataTransfer.files.length) {
+    document.getElementById('audioInput').files = e.dataTransfer.files;
+    handleFileUpload(document.getElementById('audioInput'));
+  }
+});
+
+window.handleFileUpload = function(input) {
+  if (!input.files.length) return;
+  audioFile = input.files[0];
+  window.audioFile = audioFile;
+  document.getElementById('fileName').textContent = audioFile.name + ' (' + (audioFile.size / 1024 / 1024).toFixed(1) + ' MB)';
+  document.getElementById('uploadInfo').classList.add('visible');
+};
+
+// ============ TRANSCRIPTION (Groq) ============
+window.transcribe = async function() {
+  const key = document.getElementById('groqKey').value;
+  if (!key) { alert('Insira a API key do Groq nas configuracoes'); return; }
+  if (!audioFile) return;
+
+  const loader = document.getElementById('transcribeLoader');
+  const btn = document.getElementById('transcribeBtn');
+  loader.style.display = 'inline'; btn.disabled = true;
+
+  try {
+    const formData = new FormData();
+    formData.append('file', audioFile);
+    formData.append('model', 'whisper-large-v3-turbo');
+    formData.append('response_format', 'verbose_json');
+    formData.append('timestamp_granularities[]', 'word');
+
+    const resp = await fetch('/api/groq', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + key },
+      body: formData
+    });
+
+    if (!resp.ok) throw new Error('Groq API error: ' + resp.status + ' ' + (await resp.text()));
+    groqResponse = await resp.json();
+
+    const box = document.getElementById('transcriptionBox');
+    box.textContent = groqResponse.text;
+    box.classList.add('visible');
+
+    divideScenes();
+    document.getElementById('scenesSection').style.display = 'block';
+  } catch (err) {
+    alert('Erro na transcricao: ' + err.message);
+  } finally {
+    loader.style.display = 'none'; btn.disabled = false;
+  }
+};
+
+// ============ SCENE DIVISION ============
+function divideScenes() {
+  if (!groqResponse || !groqResponse.words) return;
+  const words = groqResponse.words;
+  const minW = parseInt(document.getElementById('sliderMin').value);
+  const idealW = parseInt(document.getElementById('sliderIdeal').value);
+  const maxW = parseInt(document.getElementById('sliderMax').value);
+
+  const pontuacoesFortes = /[.!?:]/;
+  const aspas = /['\"]/;
+  const pontuacoesFracas = /[,;]/;
+
+  const output = [];
+  let pos = 0;
+  let num = 1;
+
+  while (pos < words.length) {
+    let start = pos;
+    let end = pos;
+
+    if (words.length - pos <= minW) {
+      if (output.length > 0) {
+        const last = output[output.length - 1];
+        const remaining = words.slice(pos);
+        last.text += ' ' + remaining.map(w => w.word).join(' ');
+        last.end_time = remaining[remaining.length - 1].end;
+        last.duration = parseFloat((last.end_time - last.start_time).toFixed(2));
+        break;
+      } else {
+        end = words.length;
+      }
+    } else {
+      let found = false;
+      let positions = [];
+      let maxLimit = Math.min(pos + maxW, words.length);
+
+      for (let i = pos + minW - 1; i < maxLimit; i++) {
+        const w = words[i].word;
+        const lastChar = w[w.length - 1];
+        const penult = w.length > 1 ? w[w.length - 2] : '';
+        if (pontuacoesFortes.test(lastChar) || (pontuacoesFortes.test(penult) && aspas.test(lastChar))) {
+          positions.push(i);
+          found = true;
+        }
+      }
+
+      if (found) {
+        let best = positions[0];
+        let bestDist = Math.abs((best - pos + 1) - idealW);
+        for (let p of positions) {
+          const d = Math.abs((p - pos + 1) - idealW);
+          if (d < bestDist) { bestDist = d; best = p; }
+        }
+        end = best + 1;
+      } else {
+        let commaPos = [];
+        let idealLimit = Math.min(pos + idealW + 5, words.length);
+        for (let i = pos + minW - 1; i < idealLimit; i++) {
+          if (pontuacoesFracas.test(words[i].word[words[i].word.length - 1])) commaPos.push(i);
+        }
+        if (commaPos.length > 0) {
+          let best = commaPos[0];
+          let bestDist = Math.abs((best - pos + 1) - idealW);
+          for (let p of commaPos) {
+            const d = Math.abs((p - pos + 1) - idealW);
+            if (d < bestDist) { bestDist = d; best = p; }
+          }
+          end = best + 1;
+        } else {
+          end = Math.min(pos + idealW, words.length);
+        }
+      }
+    }
+
+    const sceneWords = words.slice(start, end);
+    if (sceneWords.length > 0) {
+      output.push({
+        scene_number: num,
+        start_time: sceneWords[0].start,
+        end_time: sceneWords[sceneWords.length - 1].end,
+        duration: parseFloat((sceneWords[sceneWords.length - 1].end - sceneWords[0].start).toFixed(2)),
+        text: sceneWords.map(w => w.word).join(' ').replace(/\s+/g, ' ').trim()
+      });
+      num++;
+    }
+    pos = end;
+  }
+
+  scenes = output;
+  renderScenes();
+}
+
+window.updateSliders = function() {
+  const min = parseInt(document.getElementById('sliderMin').value);
+  const ideal = parseInt(document.getElementById('sliderIdeal').value);
+  const max = parseInt(document.getElementById('sliderMax').value);
+  document.getElementById('minVal').textContent = min;
+  document.getElementById('idealVal').textContent = ideal;
+  document.getElementById('maxVal').textContent = max;
+
+  if (ideal < min) { document.getElementById('sliderIdeal').value = min; document.getElementById('idealVal').textContent = min; }
+  if (max < ideal) { document.getElementById('sliderMax').value = ideal; document.getElementById('maxVal').textContent = ideal; }
+
+  if (groqResponse) divideScenes();
+};
+
+// ============ RENDER SCENES ============
+function renderScenes() {
+  const list = document.getElementById('scenesList');
+  document.getElementById('sceneCount').textContent = scenes.length;
+  list.innerHTML = '';
+
+  scenes.forEach((scene, idx) => {
+    const hasVid = selectedVideos[idx];
+    const keywords = extractKeywords(scene.text);
+
+    const card = document.createElement('div');
+    card.className = 'scene-card' + (hasVid ? ' has-video' : '');
+    card.innerHTML = `
+      <div class="scene-header">
+        <div class="scene-num">${scene.scene_number}</div>
+        <div class="scene-times">${formatTime(scene.start_time)} - ${formatTime(scene.end_time)} (${scene.duration.toFixed(1)}s)</div>
+      </div>
+      <div class="scene-text">${scene.text}</div>
+      <div class="scene-search-row">
+        <input class="scene-search-input" id="search-${idx}" value="${keywords}" placeholder="Buscar videos...">
+        <button class="btn btn-secondary btn-small" onclick="searchScene(${idx})">Buscar</button>
+      </div>
+      <div class="video-grid" id="grid-${idx}"></div>
+      <div class="selected-preview ${hasVid ? 'visible' : ''}" id="preview-${idx}">
+        ${hasVid ? `<video src="${hasVid.preview || hasVid.url}" width="120" muted autoplay loop></video>
+        <span>Video selecionado (${hasVid.source}) - ${hasVid.duration}s</span>
+        <button class="btn btn-small" style="background:#c0392b;color:#fff;margin-left:auto" onclick="removeVideo(${idx})">X</button>` : ''}
+      </div>
+    `;
+    list.appendChild(card);
+  });
+
+  checkExportReady();
+}
+
+function extractKeywords(text) {
+  const stopwords = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','is','it','this','that','was','are','be','have','has','had','do','does','did','will','would','could','should','may','might','i','you','he','she','we','they','my','your','his','her','our','their','me','him','us','them','o','a','e','de','do','da','em','um','uma','que','para','com','no','na','os','as','por','se','mais','como','eu','ele','ela','nos','eles','foi','ser','ter','seu','sua','meu','minha']);
+  return text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 2 && !stopwords.has(w)).slice(0, 5).join(' ');
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+// ============ VIDEO SEARCH ============
+window.searchScene = async function(idx) {
+  const query = document.getElementById('search-' + idx).value.trim();
+  if (!query) return;
+
+  const grid = document.getElementById('grid-' + idx);
+  grid.innerHTML = '<span class="loader"></span>';
+
+  const results = await searchVideos(query);
+  renderVideoGrid(grid, results, idx);
+};
+
+window.searchAllScenes = async function() {
+  const status = document.getElementById('searchAllStatus');
+  for (let i = 0; i < scenes.length; i++) {
+    status.textContent = `Buscando cena ${i + 1} de ${scenes.length}...`;
+    const query = document.getElementById('search-' + i).value.trim();
+    if (!query) continue;
+    const grid = document.getElementById('grid-' + i);
+    grid.innerHTML = '<span class="loader"></span>';
+    const results = await searchVideos(query);
+    renderVideoGrid(grid, results, i);
+    // Small delay to avoid rate limits
+    if (i < scenes.length - 1) await new Promise(r => setTimeout(r, 300));
+  }
+  status.textContent = 'Busca completa!';
+  setTimeout(() => status.textContent = '', 3000);
+};
+
+async function searchVideos(query) {
+  const pexelsKey = document.getElementById('pexelsKey').value;
+  const pixabayKey = document.getElementById('pixabayKey').value;
+  const results = [];
+
+  const promises = [];
+
+  if (pexelsKey) {
+    promises.push(
+      fetch(`/api/pexels?query=${encodeURIComponent(query)}&per_page=15&orientation=${videoFormat === 'vertical' ? 'portrait' : 'landscape'}`, {
+        headers: { 'Authorization': pexelsKey }
+      }).then(r => r.json()).then(data => {
+        (data.videos || []).forEach(v => {
+          const file = pickBestFile(v.video_files, videoFormat);
+          if (file) {
+            results.push({
+              source: 'pexels',
+              id: v.id,
+              duration: v.duration,
+              width: file.width,
+              height: file.height,
+              url: file.link,
+              preview: v.video_pictures?.[0]?.picture || '',
+              thumbnail: v.image
+            });
+          }
+        });
+      }).catch(() => {})
+    );
+  }
+
+  if (pixabayKey) {
+    promises.push(
+      fetch(`/api/pixabay?key=${pixabayKey}&q=${encodeURIComponent(query)}&per_page=15`).then(r => r.json()).then(data => {
+        (data.hits || []).forEach(v => {
+          const file = v.videos?.medium || v.videos?.small || v.videos?.large;
+          if (file) {
+            results.push({
+              source: 'pixabay',
+              id: v.id,
+              duration: v.duration,
+              width: file.width,
+              height: file.height,
+              url: file.url,
+              preview: `https://i.vimeocdn.com/video/${v.picture_id}_295x166.jpg`,
+              thumbnail: `https://i.vimeocdn.com/video/${v.picture_id}_295x166.jpg`
+            });
+          }
+        });
+      }).catch(() => {})
+    );
+  }
+
+  await Promise.all(promises);
+  return results;
+}
+
+function pickBestFile(files, format) {
+  if (!files || !files.length) return null;
+  const sorted = [...files].sort((a, b) => b.width - a.width);
+  // Try to find a good resolution (not 4K)
+  const good = sorted.find(f => f.width <= 1920 && f.width >= 640);
+  return good || sorted[sorted.length - 1];
+}
+
+function renderVideoGrid(grid, results, sceneIdx) {
+  if (!results.length) {
+    grid.innerHTML = '<span style="color:var(--text2);font-size:13px">Nenhum video encontrado</span>';
+    return;
+  }
+  grid.innerHTML = '';
+  results.forEach((vid, vidIdx) => {
+    const isSelected = selectedVideos[sceneIdx]?.id === vid.id && selectedVideos[sceneIdx]?.source === vid.source;
+    const card = document.createElement('div');
+    card.className = 'video-card' + (isSelected ? ' selected' : '');
+    card.innerHTML = `
+      <img src="${vid.thumbnail || vid.preview}" loading="lazy" onerror="this.style.background='#333'">
+      <span class="source-badge source-${vid.source}">${vid.source}</span>
+      <span class="duration-badge">${vid.duration}s</span>
+      <div class="check-mark">&#10003;</div>
+    `;
+    card.addEventListener('mouseenter', () => {
+      const img = card.querySelector('img');
+      if (vid.preview && vid.source === 'pexels') {
+        // For pexels we can try video preview
+      }
+    });
+    card.addEventListener('click', () => selectVideo(sceneIdx, vid, grid));
+    grid.appendChild(card);
+  });
+}
+
+function selectVideo(sceneIdx, vid, grid) {
+  selectedVideos[sceneIdx] = vid;
+  // Update grid selection
+  grid.querySelectorAll('.video-card').forEach((c, i) => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+
+  // Update preview
+  const preview = document.getElementById('preview-' + sceneIdx);
+  preview.innerHTML = `
+    <video src="${vid.url}" width="120" muted autoplay loop></video>
+    <span>Video selecionado (${vid.source}) - ${vid.duration}s - ${vid.width}x${vid.height}</span>
+    <button class="btn btn-small" style="background:#c0392b;color:#fff;margin-left:auto" onclick="removeVideo(${sceneIdx})">X</button>
+  `;
+  preview.classList.add('visible');
+
+  // Mark scene card
+  const card = document.getElementById('grid-' + sceneIdx).closest('.scene-card');
+  card.classList.add('has-video');
+
+  checkExportReady();
+}
+
+window.removeVideo = function(idx) {
+  delete selectedVideos[idx];
+  const preview = document.getElementById('preview-' + idx);
+  preview.innerHTML = '';
+  preview.classList.remove('visible');
+  const card = document.getElementById('grid-' + idx).closest('.scene-card');
+  card.classList.remove('has-video');
+  // Deselect in grid
+  document.getElementById('grid-' + idx).querySelectorAll('.video-card').forEach(c => c.classList.remove('selected'));
+  checkExportReady();
+};
+
+function checkExportReady() {
+  const allSelected = scenes.length > 0 && scenes.every((_, i) => selectedVideos[i]);
+  document.getElementById('exportSection').style.display = scenes.length > 0 ? 'block' : 'none';
+}
+
+// ============ EXPORT JSON ============
+window.exportJSON = function() {
+  const data = scenes.map((s, i) => ({
+    ...s,
+    video: selectedVideos[i] || null
+  }));
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'scenes-export.json';
+  a.click();
+};
+
+// ============ FFMPEG EXPORT ============
+async function loadFFmpeg() {
+  if (ffmpegLoaded) return;
+  ffmpeg = new FFmpeg();
+  ffmpeg.on('progress', ({ progress }) => {
+    const pct = Math.round(progress * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = `Processando... ${pct}%`;
+  });
+  await ffmpeg.load({
+    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm/ffmpeg-core.js',
+    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm/ffmpeg-core.wasm',
+  });
+  ffmpegLoaded = true;
+}
+
+window.exportVideo = async function() {
+  const missing = scenes.filter((_, i) => !selectedVideos[i]);
+  if (missing.length > 0) {
+    alert(`Faltam videos para ${missing.length} cena(s). Selecione videos para todas as cenas.`);
+    return;
+  }
+
+  const btn = document.getElementById('exportBtn');
+  btn.disabled = true;
+  const prog = document.getElementById('progressContainer');
+  prog.classList.add('visible');
+  const status = document.getElementById('exportStatus');
+  status.textContent = 'Carregando FFmpeg...';
+
+  try {
+    await loadFFmpeg();
+
+    const isVertical = videoFormat === 'vertical';
+    const targetW = isVertical ? 1080 : 1920;
+    const targetH = isVertical ? 1920 : 1080;
+
+    // Write audio file
+    status.textContent = 'Preparando audio...';
+    const audioData = await fetchFile(window.audioFile);
+    await ffmpeg.writeFile('audio.mp3', audioData);
+
+    // Download and process each scene video
+    let fileList = '';
+    for (let i = 0; i < scenes.length; i++) {
+      const scene = scenes[i];
+      const vid = selectedVideos[i];
+      status.textContent = `Baixando video cena ${i + 1}/${scenes.length}...`;
+
+      const videoData = await fetchFile(vid.url);
+      const inputName = `input_${i}.mp4`;
+      const outputName = `scene_${i}.mp4`;
+      await ffmpeg.writeFile(inputName, videoData);
+
+      // Calculate duration (extend to next scene start if possible)
+      let duration = scene.duration;
+      if (i < scenes.length - 1) {
+        duration = scenes[i + 1].start_time - scene.start_time;
+      }
+      if (i === 0 && scene.start_time > 0) {
+        duration += scene.start_time;
+      }
+      duration = parseFloat(duration.toFixed(3));
+
+      status.textContent = `Processando cena ${i + 1}/${scenes.length}...`;
+
+      const scaleFilter = isVertical
+        ? `scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920`
+        : `scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:-1:-1:color=black`;
+
+      await ffmpeg.exec([
+        '-y', '-stream_loop', '-1',
+        '-i', inputName,
+        '-vf', `trim=duration=${duration},setpts=PTS-STARTPTS,${scaleFilter}`,
+        '-r', '30', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '23', '-an',
+        outputName
+      ]);
+
+      fileList += `file '${outputName}'\n`;
+      await ffmpeg.deleteFile(inputName);
+    }
+
+    // Concatenate
+    status.textContent = 'Juntando todos os clipes...';
+    await ffmpeg.writeFile('list.txt', new TextEncoder().encode(fileList));
+
+    await ffmpeg.exec([
+      '-y', '-f', 'concat', '-safe', '0', '-i', 'list.txt',
+      '-i', 'audio.mp3',
+      '-map', '0:v', '-map', '1:a',
+      '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k',
+      '-shortest',
+      'output.mp4'
+    ]);
+
+    // Read and download
+    status.textContent = 'Finalizando...';
+    const outputData = await ffmpeg.readFile('output.mp4');
+    const blob = new Blob([outputData.buffer], { type: 'video/mp4' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'video_final.mp4';
+    a.click();
+
+    status.textContent = 'Video gerado com sucesso! Download iniciado.';
+    document.getElementById('progressFill').style.width = '100%';
+
+    // Cleanup
+    for (let i = 0; i < scenes.length; i++) {
+      try { await ffmpeg.deleteFile(`scene_${i}.mp4`); } catch {}
+    }
+    try { await ffmpeg.deleteFile('list.txt'); } catch {}
+    try { await ffmpeg.deleteFile('audio.mp3'); } catch {}
+    try { await ffmpeg.deleteFile('output.mp4'); } catch {}
+
+  } catch (err) {
+    status.textContent = 'Erro: ' + err.message;
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+</script>
 </body>
 </html>
