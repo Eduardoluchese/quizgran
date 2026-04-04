@@ -1,56 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Teste - Integração GTM</title>
+    <title>Página de Vendas - Teste BuyGoods</title>
 
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://load.cafe.vaulttab.com/avchqtlbjc.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','5=Cg5fKyA8RS0vXCUkJydbRRVXUEJFVwwNXhwDGRgFHAIBRAEDGQ%3D%3D');</script>
-<!-- End Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://load.cafe.vaulttab.com/avchqtlbjc.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','5=Cg5fKyA8RS0vXCUkJydbRRVXUEJFVwwNXhwDGRgFHAIBRAEDGQ%3D%3D');</script>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0; }
-        .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; max-width: 400px; }
-        h1 { color: #333; }
-        p { color: #666; margin-bottom: 20px; line-height: 1.5; }
-        button { background-color: #000; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; width: 100%;}
-        button:hover { background-color: #333; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            background-color: #f4f4f9;
+        }
+        .btn-comprar {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        .btn-comprar:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Teste GTM + Stape</h1>
-        <p>O Google Tag Manager está instalado. Os códigos do Facebook foram removidos do HTML.</p>
-        
-        <button onclick="dispararEventoGTM()">Simular Compra (DataLayer)</button>
-    </div>
+    <h1>Produto Teste Incrível</h1>
+    <p>Clique no botão abaixo para ir ao checkout.</p>
+    <br>
 
-    <script>
-    // Função para enviar os dados para a Camada de Dados (DataLayer) do GTM
-    function dispararEventoGTM() {
-        // Inicializa o DataLayer caso não exista
-        window.dataLayer = window.dataLayer || [];
-        
-        // Dispara um evento personalizado que o GTM pode ler
-        window.dataLayer.push({
-            'event': 'purchase_test',
-            'ecommerce': {
-                'currency': 'BRL',
-                'value': 97.00,
-                'items': [{
-                    'item_id': 'PRODUTO_001',
-                    'item_name': 'Curso Teste',
-                    'price': 97.00,
-                    'quantity': 1
-                }]
-            }
-        });
-        
-        alert('Evento "purchase_test" enviado para o GTM!');
-        console.log('Verifique o modo de Visualização (Preview) do GTM para confirmar o recebimento do evento "purchase_test".');
-    }
-    </script>
+    <a href="https://buygoods.com/secure/checkout/?a=1234&prod=5678" class="btn-comprar">
+        COMPRAR AGORA
+    </a>
 
 </body>
 </html>
